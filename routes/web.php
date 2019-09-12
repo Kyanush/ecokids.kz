@@ -17,7 +17,6 @@ Route::group(['namespace'  => 'Site'], function () {
 
     //поиск товара
     Route::get('product-search', 'ProductController@productSearch');
-    Route::get('search', 'ProductController@productSearch')->name('search');
 
     //Корзина
     Route::post('cart-save',                'CartController@cartSave');

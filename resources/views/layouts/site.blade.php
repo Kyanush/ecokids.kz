@@ -1,3 +1,8 @@
+@php
+    $address = config('shop.address');
+    $number_phones = config('shop.number_phones');
+@endphp
+
 <!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
 <html lang="{{ app()->getLocale() }}">
@@ -35,6 +40,9 @@
     <link rel="stylesheet" type="text/css" href="/site/sweetalert2/sweetalert2.min.css">
     <!---- sweetalert2  ----->
 
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Vue js -->
     <script type="text/javascript" src="/site/js/vue.2.6.4.js"></script>
     <script type="module">
@@ -67,13 +75,17 @@
 
 <body class="home page-template page-template-page-templates page-template-home-page page-template-page-templateshome-page-php page page-id-347 custom-background theme-kidz woocommerce-no-js sidebar-disable header-type-1 sticky-type-1 layout-boxed-white fixed-slider  woocommerce-on theme-demo preload">
 
-<!-- Поиск --->
+
+
+
+
+<!-------------------------------------- Поиск ---------------------------------------->
 <span id="search">
     <div id="ajax-search" class="search-type-1">
         <div class="container ajax-search-container">
             <div class="ajax-search-tip">Что вы ищите?</div>
-            <form role="search" method="get" action="{{ route('search') }}">
-                <input id="ajax-search-input" autocomplete="off" type="text" name="s" placeholder="Поиск товара..." value="">
+            <form role="search">
+                <input id="ajax-search-input" v-model="search" autocomplete="off" type="text" name="s" placeholder="Поиск товара..." value="">
                 <input type="hidden" name="post_type" value="product">
                 <a id="search-close" href="#">
                     <svg>
@@ -82,45 +94,63 @@
                         </use>
                     </svg>
                 </a>
-                <button type="submit" class="search">
+                <button type="button" class="search">
                     <svg>
                         <use xlink:href="#svg-search">
-                            <svg viewBox="0 0 20 20" id="svg-search" fill="inherit" stroke="inherit"><path d="M11.124 15.367l.001.001 3.528 3.527a3.005 3.005 0 0 0 4.246.004 3.005 3.005 0 0 0-.004-4.246l-3.527-3.528h-.001A7.977 7.977 0 0 0 16 8a8 8 0 1 0-4.876 7.367zM8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z" fill="inherit" fill-rule="evenodd" stroke="none"></path></svg>
+                            <svg viewBox="0 0 20 20" id="svg-search" fill="inherit" stroke="inherit"><path d="M11.124 15.367l.001.001 3.528 3.527a3.005 3.005 0 0 0 4.246.004 3.005 3.005 0 0 0-.004-4.246l-3.527-3.528h-.001A7.977 7.977 0 0 0 16 8a8 8 0 1 0-4.876 7.367zM8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z" fill="inherit" fill-rule="evenodd" stroke="none"></path>
+                            </svg>
                         </use>
                     </svg>
                 </button>
             </form>
         </div>
     </div>
+
     <div id="ajax-search-result" class="search-type-1 loading">
-        <div class="container ajax-search-result-container js-ajax-search-result       loaded">
-
-            <li class="ajax-search-row post-126 type-product status-publish has-post-thumbnail product_cat-girl-shoes product_cat-shoes product first instock featured shipping-taxable purchasable product-type-simple">
-                <a href="https://parkofideas.com/kidz/demo2/product/oshkosh-sparkle-cat-crib-shoes/">
-                    <div class="post-img">
-                        <img src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-21-70x70.jpg" alt="">
-                    </div>
-                </a>
-
-                <div class="post-content">
-                    <a href="https://parkofideas.com/kidz/demo2/product/oshkosh-sparkle-cat-crib-shoes/">
-                        <h4>Oshkosh sparkle cat crib shoes</h4>
+        <div class="container ajax-search-result-container js-ajax-search-result loaded">
+            <ul>
+                <li v-if="results.length > 0" class="ajax-search-row post-126 type-product status-publish has-post-thumbnail product_cat-girl-shoes product_cat-shoes product first instock featured shipping-taxable purchasable product-type-simple" v-for="item in results">
+                    <a :href="item.url" target="_blank">
+                        <div class="post-img">
+                            <img :src="item.photo" :alt="item.name">
+                        </div>
                     </a>
-
-                    <span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>22</span></span>									<div class="actions">
-                        <a href="/kidz/demo2/wp-admin/admin-ajax.php?add-to-cart=126" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="126" data-product_sku="" aria-label="Add “Oshkosh sparkle cat crib shoes” to your cart" rel="nofollow">Add to cart</a><span class="ip-shop-loop-loading"><i></i><i></i><i></i></span>									</div>
-
-                </div>
-            </li>
-            <li class="no-results">No results found</li>
-
+                    <div class="post-content">
+                        <a :href="item.url" target="_blank">
+                            <h4>@{{ item.name }}</h4>
+                        </a>
+                        <span class="price">
+                            <span class="woocommerce-Price-amount amount">
+                                @{{ item.price }}
+                            </span>
+                        </span>
+                        <div class="actions">
+                            <a target="_blank" :href="item.url" class="button product_type_simple add_to_cart_button ajax_add_to_cart" rel="nofollow">
+                                Купить
+                            </a>
+                            <span class="ip-shop-loop-loading">
+                                <i></i><i></i><i></i>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li v-if="results.length > 0"></li>
+                <li v-if="results.length == 0 && search" class="no-results">Результатов не найдено</li>
+            </ul>
         </div>
     </div>
+
+    <!--
     <div class="search-shadow search-type-1 loading">
         <span class="ip-shop-loop-loading"><i></i><i></i><i></i></span>
     </div>
+    --->
 </span>
-<!-- Поиск --->
+<!-------------------------------------- Поиск ---------------------------------------->
+
+
+
+
 
 
 <div id="wrap" class="search-type-1 wrap--boxed wrap--boxed-white">
@@ -226,7 +256,7 @@
                             </use>
                         </svg>
                     </a>
-                    <a class="search" href="{{ route('search') }}">
+                    <a class="search" href="#">
                         <svg>
                             <use xlink:href="#svg-search">
                                 <svg viewBox="0 0 20 20" id="svg-search" fill="inherit" stroke="inherit"><path d="M11.124 15.367l.001.001 3.528 3.527a3.005 3.005 0 0 0 4.246.004 3.005 3.005 0 0 0-.004-4.246l-3.527-3.528h-.001A7.977 7.977 0 0 0 16 8a8 8 0 1 0-4.876 7.367zM8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z" fill="inherit" fill-rule="evenodd" stroke="none"></path></svg>
@@ -350,7 +380,7 @@
                             </use>
                         </svg>
                     </a>
-                    <a class="mobile-search" href="{{ route('search') }}">
+                    <a class="mobile-search" href="#">
                         <svg>
                             <use xlink:href="#svg-search">
                                 <svg viewBox="0 0 20 20" id="svg-search" fill="inherit" stroke="inherit"><path d="M11.124 15.367l.001.001 3.528 3.527a3.005 3.005 0 0 0 4.246.004 3.005 3.005 0 0 0-.004-4.246l-3.527-3.528h-.001A7.977 7.977 0 0 0 16 8a8 8 0 1 0-4.876 7.367zM8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z" fill="inherit" fill-rule="evenodd" stroke="none"></path></svg>
@@ -370,14 +400,17 @@
                 <div class="row footer-sidebar">
                     <div class="col-md-3 col-sm-6 col-xs-6 first">
                         <div class="footer-logo">
-                            <img src="./KIDZ – Baby Shop &amp; Kids Store WooCommerce WordPress Theme – Just another WordPress site_files/logo.svg" class="svg" alt="KIDZ - Baby Shop &amp; Kids Store WooCommerce Wordpress Theme">
+                            <a href="/">
+                                <img class="svg" src="{{ config('shop.logo') }}" title="{{ env('APP_NAME') }}" alt="{{ env('APP_NAME') }}"/>
+                            </a>
                         </div>
                         <div class="contacts">
-                            555 California str, Suite 100<br>
-                            San&nbsp;Francisco, CA 94107<br>
-                            1-800-312-2121<br>
-                            1-800-310-1010<br><br>
-                            <a href="mailto:example@domrfain.net">example@domain.net</a>
+                            {{ $address[0]['addressLocality'] }}
+                            <br>
+                            {{ $address[0]['streetAddress'] }}
+                            <a href="mailto:{{ config('shop.site_email') }}">
+                                {{ config('shop.site_email') }}
+                            </a>
                         </div>
                     </div>
                     <aside id="woocommerce_products-6" class="widget footer-widget woocommerce widget_products col-md-3 col-sm-6 col-xs-6">
@@ -469,16 +502,21 @@
                     </aside>
                 </div>
                 <div class="row bottom ">
+                    <div class="col-xs-12">
+                        Доставка по всему Казахстану: в Алматы, Нур-Султан, Актобе, Актау, Атырау, Усть-Каменогорск, Караганду, Семей, Шымкент, Костанай, Павлодар, Уральск, Кызылорду и другие города.
+                    </div>
+                    <br/><br/>
                     <div class="col-xs-6 col-xs-push-6">
                         <div class="soc">
+
+                            <a href="{{ config('shop.social_network.instagram') }}" target="_blank" title="Вы в Instagram">
+                                <i class="soc-img soc-instagram fa fa-instagram"></i>
+                            </a>
+
+                            <!--
                             <a href="#" target="_blank">
                                 <svg class="soc-img soc-facebook">
                                     <use xlink:href="#svg-facebook"></use>
-                                </svg>
-                            </a>
-                            <a href="#" target="_blank">
-                                <svg class="soc-img soc-instagram">
-                                    <use xlink:href="#svg-instagram"></use>
                                 </svg>
                             </a>
                             <a href="#" target="_blank">
@@ -491,9 +529,13 @@
                                     <use xlink:href="#svg-youtube"></use>
                                 </svg>
                             </a>
+                            --->
                         </div>
                     </div>
-                    <div class="col-xs-6 col-xs-pull-6 copyright">© Copyright 2018, Kidz WordPress Theme</div>
+                    <div class="col-xs-6 col-xs-pull-6 copyright">
+                        Copyright &copy;{{date('Y')}} Все права защищены.
+                    </div>
+
                 </div>
             </div>
         </div>

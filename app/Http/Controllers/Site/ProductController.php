@@ -104,16 +104,21 @@ class ProductController extends Controller
     }
 
     public function productSearch(Request $request){
-
-        $products = Product::filters(['name' => $request->input('searchText'), 'active' => 1])->limit(10)->get();
-        $data = $products->map(function ($item) {
-            return [
-                'id'      => $item->id,
-                'name'    => $item->name,
-                'url'     => $item->detailUrlProduct(),
-                'photo'   => $item->pathPhoto(true)
-            ];
-        });
+        $data = [];
+        $searchText = $request->input('searchText');
+        if($searchText)
+        {
+            $products = Product::filters(['name' => $searchText, 'active' => 1])->limit(10)->get();
+            $data = $products->map(function ($item) {
+                return [
+                    'id'      => $item->id,
+                    'name'    => $item->name,
+                    'url'     => $item->detailUrlProduct(),
+                    'price'   => Helpers::priceFormat($item->getReducedPrice()),
+                    'photo'   => $item->pathPhoto(true),
+                ];
+            });
+        }
 
         return  $this->sendResponse($data);
     }

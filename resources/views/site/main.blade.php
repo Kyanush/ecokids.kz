@@ -1806,26 +1806,26 @@
     </section>
     <section id="home-text">
         <div class="container">
-            <h1>KIDZ – WooCommerce theme for Baby Store</h1>
+            <h1>Интернет-магазин детских товаров {{ env('APP_NAME') }}</h1>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="entry-content">
                         <div class="clear"></div>
                         <div class="two-col">
                             <div class="left">
-                                <div>Sed dictum eros nec sapien ultricies, sit amet vulputate tellus congue. Aenean viverra porta nulla, et auctor lacus convallis ut. Pellentesque cursus, nisl vitae placerat efficitur, felis nisi consectetur ante, in consectetur arcu metus et diam. Sed ut orci sed dolor semper blandit quis at metus. Cras id mi a purus aliquet tincidunt at quis metus. Morbi ut fringilla dui, ut pretium tortor.<br>
+                                <div>
+                                    {{ env('APP_NAME') }} — интернет магазин товаров для детей и новорожденных! Лучшие цены на детские товары возможны благодаря прямым поставкам от производителей.
                                     <br>
-                                    Sed hendrerit, tortor eget sodales posuere, lacus ante ornare sapien, ut consequat sapien ipsum ut ex. In hac habitasse platea dictumst. Quisque blandit metus ut felis ultricies, nec feugiat nibh fermentum. Maecenas eget eros eget nunc varius vestibulum non a ligula.<br>
+                                    В интернет магазине {{ env('APP_NAME') }} только безопасные, сертифицированные товары и игрушки для детей.
                                     <br>
-                                    Fusce ut ullamcorper lacus. Morbi non tempus nisl, sit amet maximus sapien. Maecenas accumsan tincidunt libero, in pretium elit imperdiet ac.
+                                    За несколько лет работы с наших складов были доставлены тысячи посылок по всему Казахстану.
                                 </div>
                             </div>
                             <div class="right">
-                                <div>Morbi justo felis, cursus nec velit eu, facilisis porta tortor. Aliquam accumsan et massa vel scelerisque. Pellentesque egestas sem sit amet massa lacinia, et scelerisque ante lobortis.<br>
+                                <div>
+                                    Высокий сервис достигается тем, что доставка осуществляется собственной курьерской службой в таких городах как Алматы, Нур-Султан, Караганда, Кокшетау, Темиртау, Уральск, Усть-Каменагорск, Шымкент.
                                     <br>
-                                    Morbi at nisi nisi. Nunc aliquet, sem vel volutpat egestas, justo metus facilisis mauris, eget gravida dui metus quis elit. Vestibulum justo arcu, finibus ac sodales facilisis, ultricies et tortor. Sed ligula felis, venenatis et tempor sit amet, dapibus a libero.<br>
-                                    <br>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at dolor ac lacus maximus suscipit in non nisl. Phasellus in vehicula mauris. Nunc quis odio felis. Proin mi turpis, pretium at suscipit sit amet, iaculis non enim. Sed dictum eros nec sapien ultricies, sit amet vulputate tellus congue.
+                                    Мы сделаем все, чтобы покупка в нашем магазине оказалась приятной для Вас!
                                 </div>
                             </div>
                         </div>

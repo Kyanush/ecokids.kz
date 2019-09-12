@@ -1,3 +1,4 @@
+
 function addToCartSite(self, product_id, quantity){
     if(addToCart(product_id, quantity))
     {
@@ -51,11 +52,26 @@ var search = new Vue({
     el: '#search',
     data () {
         return {
+            search: '',
             results: []
         }
     },
     methods:{
-    }
+        productsSearch(){
+            this.results = [];
+            axios.get('/product-search?searchText=' + this.search).then((res)=>{
+                this.results = res.data;
+            });
+        }
+    },
+    watch: {
+        search: {
+            handler: function (val, oldVal) {
+                this.productsSearch();
+            },
+            deep: true
+        }
+    },
 });
 
 var header = new Vue({
