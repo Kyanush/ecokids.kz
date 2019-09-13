@@ -3839,8 +3839,8 @@ select.styled {
 
 #home-review .thumb {
     margin-top: 22px;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -5938,6 +5938,11 @@ select.styled {
     padding-left: 15px;
     padding-bottom: 70px;
     max-width: 440px;
+}
+
+.woocommerce-product-details__short-description{
+    max-height: 200px;
+    overflow-x: hidden;
 }
 
 .ip-p-c.qv .product_title {

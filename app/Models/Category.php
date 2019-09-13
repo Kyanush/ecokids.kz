@@ -89,7 +89,7 @@ class Category extends Model
 
     public function pathImage($firstSlash = false)
     {
-        if(!empty($this->image))
+        if($this->image)
             return ($firstSlash ? '/' : '') . config('shop.categories_path_file') . $this->image;
         else
             false;

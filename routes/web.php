@@ -25,8 +25,9 @@ Route::group(['namespace'  => 'Site'], function () {
     Route::get('header-cart-info',          'CartController@header_cart_info');
 
     //Оформление заказа
-    Route::get('checkout',   'CartController@checkout')->name('checkout');
-    Route::post('checkout',  'CartController@saveCheckout');
+    Route::get('checkout',          'CartController@checkout')->name('checkout');
+    Route::get('cart',              'CartController@cart')->name('cart');
+    Route::post('checkout',         'CartController@saveCheckout');
     Route::post('one-click-order',  'CartController@oneClickOrder');
 
     //Оформление заказа ajax

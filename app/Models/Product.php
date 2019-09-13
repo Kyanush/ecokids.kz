@@ -339,7 +339,7 @@ class Product extends Model
             'specificPrice' => function($query){
                 $query->dateActive();
             },
-            'attributes',
+            'attributes.values',
             'categories',
             'avgRating',
             'oneProductFeaturesCompare',

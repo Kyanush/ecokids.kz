@@ -72,7 +72,7 @@ class CatalogController extends Controller
             ->filters($filters)
             ->filtersAttributes($filters)
             ->OrderBy($column, $order)
-            ->paginate(15)->onEachSide(1);
+            ->paginate(12)->onEachSide(1);
 
         $productsHitViewed = Product::productInfoWith()
             ->filters($category_code ? ['category' => $category_code] : [])

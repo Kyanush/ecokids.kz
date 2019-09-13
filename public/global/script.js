@@ -83,7 +83,10 @@ function getCsrfToken() {
     return $('meta[name="csrf-token"]').attr('content');
 }
 
-function productFeaturesWishlist(self, product_id){
+function productFeaturesWishlist(self, product_id, _class){
+    if(!_class)
+        _class = 'active';
+
     getProduct(product_id, function(result){
 
         $.ajax({
@@ -94,16 +97,19 @@ function productFeaturesWishlist(self, product_id){
             success: function(data) {
                 if(data)
                 {
-                    if($(self).hasClass('active'))
-                        $(self).removeClass('active');
-                    else{
-                        $(self).addClass('active');
-                        Swal({
-                            title: 'Закладки',
-                            html: '<p class="text-swal2">Товар <a href="' + result.detailUrlProduct + '">'
-                            + result.product.name +
-                            '</a> добавлен в <a href="/wishlist">закладки</a>!</p>'
-                        });
+                    if(self)
+                    {
+                        if($(self).hasClass(_class))
+                            $(self).removeClass(_class);
+                        else{
+                            $(self).addClass(_class);
+                            Swal({
+                                title: 'Закладки',
+                                html: '<p class="text-swal2">Товар <a href="' + result.detailUrlProduct + '">'
+                                + result.product.name +
+                                '</a> добавлен в <a href="/wishlist">закладки</a>!</p>'
+                            });
+                        }
                     }
 
                     if(typeof header == 'object')

@@ -1,16 +1,6 @@
 @if ($paginator->hasPages())
 
-    <!--
-    <ul class="store-pagination">
-        <li class="active">1</li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-    </ul>
----->
-
-    <ul class="store-pagination">
+    <ul class="page-numbers">
 
 
             {{-- Previous Page Link --}}
@@ -40,12 +30,16 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <li class="active">
-                               {{ $page }}
+                            <li>
+                                <span aria-current="page" class="page-numbers current">
+                                    {{ $page }}
+                                </span>
                             </li>
                         @else
                             <li>
-                                <a href="{{ $url }}">{{ $page }}</a>
+                                <a class="page-numbers" href="{{ $url }}">
+                                    {{ $page }}
+                                </a>
                             </li>
                         @endif
                     @endforeach

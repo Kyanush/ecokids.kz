@@ -139,12 +139,14 @@ class ProductController extends Controller
 
     public function getProduct($product_id){
         $product = Product::findOrFail($product_id);
+
         return  $this->sendResponse([
-            'product'          => $product,
-            'detailUrlProduct' => $product->detailUrlProduct(),
-            'pathPhoto'        => $product->pathPhoto(true),
-            'price'            => Helpers::priceFormat($product->getReducedPrice()),
-            'attributes'       => $product->attributes
+            'features_wishlist' => $product->oneProductFeaturesWishlist ? true : false,
+            'product'           => $product,
+            'detailUrlProduct'  => $product->detailUrlProduct(),
+            'pathPhoto'         => $product->pathPhoto(true),
+            'price'             => Helpers::priceFormat($product->getReducedPrice()),
+            'attributes'        => $product->attributes
         ]);
     }
 

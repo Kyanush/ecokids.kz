@@ -4,7 +4,6 @@
 @endphp
 
 <!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -32,6 +31,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/global/config-axios.js"></script>
     <!-- axios -->
+
+
+
 
     <!---- sweetalert2  ----->
     <script src="/site/sweetalert2/sweetalert2.all.min.js"></script>
@@ -63,6 +65,7 @@
     <link rel="stylesheet" href="/site/css/my.css"    type="text/css"   media="all"/>
 
 
+
     @yield('add_in_head')
     @include('schemas.business')
     @include('schemas.organization')
@@ -73,84 +76,11 @@
 </head>
 
 
-<body class="home page-template page-template-page-templates page-template-home-page page-template-page-templateshome-page-php page page-id-347 custom-background theme-kidz woocommerce-no-js sidebar-disable header-type-1 sticky-type-1 layout-boxed-white fixed-slider  woocommerce-on theme-demo preload">
+<body class="home page-template page-template-page-templates page-template-home-page page-template-page-templateshome-page-php page page-id-347 custom-background theme-kidz woocommerce-no-js sidebar-disable header-type-1 sticky-type-1 layout-boxed-white fixed-slider  woocommerce-on theme-demo preload
+    @yield('body_class')
+">
 
-
-
-
-
-<!-------------------------------------- Поиск ---------------------------------------->
-<span id="search">
-    <div id="ajax-search" class="search-type-1">
-        <div class="container ajax-search-container">
-            <div class="ajax-search-tip">Что вы ищите?</div>
-            <form role="search">
-                <input id="ajax-search-input" v-model="search" autocomplete="off" type="text" name="s" placeholder="Поиск товара..." value="">
-                <input type="hidden" name="post_type" value="product">
-                <a id="search-close" href="#">
-                    <svg>
-                        <use xlink:href="#svg-close">
-                            <svg viewBox="0 0 13 13" id="svg-close" fill="inherit" stroke="inherit"><path d="M2.19.326A1.671 1.671 0 0 0 .568 3.122L4.21 6.763v-.708L.568 9.696a1.671 1.671 0 1 0 2.366 2.362l3.64-3.638h-.707l3.642 3.642a1.68 1.68 0 0 0 2.366.006 1.674 1.674 0 0 0-.002-2.372l-3.641-3.64v.707l3.643-3.643A1.68 1.68 0 0 0 11.88.755a1.674 1.674 0 0 0-2.37.002l-3.642 3.64h.706L2.931.756a1.674 1.674 0 0 0-.74-.431z" stroke="none"></path></svg>
-                        </use>
-                    </svg>
-                </a>
-                <button type="button" class="search">
-                    <svg>
-                        <use xlink:href="#svg-search">
-                            <svg viewBox="0 0 20 20" id="svg-search" fill="inherit" stroke="inherit"><path d="M11.124 15.367l.001.001 3.528 3.527a3.005 3.005 0 0 0 4.246.004 3.005 3.005 0 0 0-.004-4.246l-3.527-3.528h-.001A7.977 7.977 0 0 0 16 8a8 8 0 1 0-4.876 7.367zM8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z" fill="inherit" fill-rule="evenodd" stroke="none"></path>
-                            </svg>
-                        </use>
-                    </svg>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <div id="ajax-search-result" class="search-type-1 loading">
-        <div class="container ajax-search-result-container js-ajax-search-result loaded">
-            <ul>
-                <li v-if="results.length > 0" class="ajax-search-row post-126 type-product status-publish has-post-thumbnail product_cat-girl-shoes product_cat-shoes product first instock featured shipping-taxable purchasable product-type-simple" v-for="item in results">
-                    <a :href="item.url" target="_blank">
-                        <div class="post-img">
-                            <img :src="item.photo" :alt="item.name">
-                        </div>
-                    </a>
-                    <div class="post-content">
-                        <a :href="item.url" target="_blank">
-                            <h4>@{{ item.name }}</h4>
-                        </a>
-                        <span class="price">
-                            <span class="woocommerce-Price-amount amount">
-                                @{{ item.price }}
-                            </span>
-                        </span>
-                        <div class="actions">
-                            <a target="_blank" :href="item.url" class="button product_type_simple add_to_cart_button ajax_add_to_cart" rel="nofollow">
-                                Купить
-                            </a>
-                            <span class="ip-shop-loop-loading">
-                                <i></i><i></i><i></i>
-                            </span>
-                        </div>
-                    </div>
-                </li>
-                <li v-if="results.length > 0"></li>
-                <li v-if="results.length == 0 && search" class="no-results">Результатов не найдено</li>
-            </ul>
-        </div>
-    </div>
-
-    <!--
-    <div class="search-shadow search-type-1 loading">
-        <span class="ip-shop-loop-loading"><i></i><i></i><i></i></span>
-    </div>
-    --->
-</span>
-<!-------------------------------------- Поиск ---------------------------------------->
-
-
-
-
+@include('site.includes.search')
 
 
 <div id="wrap" class="search-type-1 wrap--boxed wrap--boxed-white">
@@ -166,12 +96,12 @@
                             </use>
                         </svg>
                         @guest
-                            <span><a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Войти</a></span>
-                            <span><a href="{{ route('register') }}"><i class="fa fa-user-o"></i> Регистрация</a></span>
+                            <span><a href="{{ route('login') }}">Войти</a></span>
+                            <span><a href="{{ route('register') }}">Регистрация</a></span>
                         @endguest
                         @auth
-                            <span><a href="{{ route('my_account') }}"><i class="fa fa-sign-in"></i> Вы вошли как {{ Auth::user()->name }}</a></span>
-                            <span><a href="{{ route('logout') }}">    <i class="fa fa-user-o"></i> Выйти</a></span>
+                            <span><a href="{{ route('my_account') }}">Вы вошли как {{ Auth::user()->name }}</a></span>
+                            <span><a href="{{ route('logout') }}">Выйти</a></span>
                         @endauth
                     </a>
                 </div>
@@ -186,17 +116,17 @@
                             <li class="menu-item {{ Request::routeIs('delivery_payment') ? 'active' : '' }}">
                                 <a href="{{ route('delivery_payment') }}">
                                     Доставка/Оплата
-                                    <i class="fas fa-chevron-down"></i>
                                 </a>
                             </li>
                             <li class="menu-item {{ Request::routeIs('contact') ? 'active' : '' }}">
                                 <a href="{{ route('contact') }}">
                                     Контакты
-                                    <i class="fas fa-chevron-down"></i>
                                 </a>
                             </li>
                             <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-402">
-                                <a>Меню</a>
+                                <a>
+                                    Меню
+                                </a>
                                 <a href="#" class="js-more"><i class="more"></i></a>
                                 <ul class="sub-menu">
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom {{ Request::routeIs('wishlist') ? 'active' : '' }}">
@@ -349,12 +279,12 @@
                             </svg>
 
                             @guest
-                                <span><a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Войти</a></span>
-                                <span><a href="{{ route('register') }}"><i class="fa fa-user-o"></i> Регистрация</a></span>
+                                <span><a href="{{ route('login') }}">Войти</a></span>
+                                <span><a href="{{ route('register') }}">Регистрация</a></span>
                             @endguest
                             @auth
-                                <span><a href="{{ route('my_account') }}"><i class="fa fa-sign-in"></i> Вы вошли как {{ Auth::user()->name }}</a></span>
-                                <span><a href="{{ route('logout') }}">    <i class="fa fa-user-o"></i> Выйти</a></span>
+                                <span><a href="{{ route('my_account') }}">Вы вошли как {{ Auth::user()->name }}</a></span>
+                                <span><a href="{{ route('logout') }}">Выйти</a></span>
                             @endauth
 
 
@@ -413,93 +343,29 @@
                             </a>
                         </div>
                     </div>
-                    <aside id="woocommerce_products-6" class="widget footer-widget woocommerce widget_products col-md-3 col-sm-6 col-xs-6">
-                        <h2 class="widget-title">Featured</h2>
-                        <ul class="product_list_widget">
-                            <li>
-                                <a href="product/oshkosh-sparkle-cat-crib-shoes/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-21-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-21-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-21-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Oshkosh sparkle cat crib shoes</span>
-                                </a>
-                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>22</span>
-                            </li>
-                            <li>
-                                <a href="product/oshkosh-chukka-boots/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-26-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-26-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-26-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Oshkosh chukka boots</span>
-                                </a>
-                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>44</span>
-                            </li>
-                            <li>
-                                <a href="product/oshkosh-quilted-puffer-vest/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-5-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-5-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-5-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Oshkosh quilted puffer vest</span>
-                                </a>
-                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>15</span>
-                            </li>
-                            <li>
-                                <a href="product/french-terry-shawl-collar-cardigan/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-4-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-4-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-4-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">French terry shawl collar cardigan</span>
-                                </a>
-                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>23</span>
-                            </li>
-                        </ul>
-                    </aside>
-                    <aside id="woocommerce_products-7" class="widget footer-widget woocommerce widget_products col-md-3 col-sm-6 col-xs-6">
-                        <h2 class="widget-title">On Sale</h2>
-                        <ul class="product_list_widget">
-                            <li>
-                                <a href="product/tiered-neon-maxi-skirt/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-10-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-10-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-10-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Tiered neon maxi skirt</span>
-                                </a>
-                                <del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>8</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>6</span></ins>
-                            </li>
-                            <li>
-                                <a href="product/oshkosh-jersey-lined-windbreaker/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-1-9-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-1-9-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-1-9-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Oshkosh jersey-lined windbreaker</span>
-                                </a>
-                                <del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>20</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>16</span></ins>
-                            </li>
-                            <li>
-                                <a href="product/oshkosh-quilted-puffer-vest-2/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-8-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-8-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-8-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Oshkosh quilted puffer vest</span>
-                                </a>
-                                <del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>14</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>12</span></ins>
-                            </li>
-                            <li>
-                                <a href="product/2-pocket-denim-bodysuit/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-2-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-2-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-2-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">2-pocket denim bodysuit</span>
-                                </a>
-                                <del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>13</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>10</span></ins>
-                            </li>
-                        </ul>
-                    </aside>
-                    <aside id="woocommerce_products-8" class="widget footer-widget woocommerce widget_products col-md-3 col-sm-6 col-xs-6">
-                        <h2 class="widget-title">New</h2>
-                        <ul class="product_list_widget">
-                            <li>
-                                <a href="product/stride-rite-str-tulip-sandal/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-1-28-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-1-28-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-1-28-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Stride rite str tulip sandal</span>
-                                </a>
-                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>48</span>
-                            </li>
-                            <li>
-                                <a href="product/carters-unicorn-slippers/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-1-27-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-1-27-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-1-27-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Carter's unicorn slippers</span>
-                                </a>
-                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>10</span>
-                            </li>
-                            <li>
-                                <a href="product/oshkosh-chukka-boots/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-26-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-26-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-26-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Oshkosh chukka boots</span>
-                                </a>
-                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>44</span>
-                            </li>
-                            <li>
-                                <a href="product/stride-rite-made2play-sneaker-boot/">
-                                    <img width="70" height="70" data-src="wp-content/uploads/2016/10/clothes-2-25-70x70.jpg" class="lazyload attachment-thumbnail size-thumbnail" alt="" data-srcset="wp-content/uploads/2016/10/clothes-2-25-70x70.jpg 70w, wp-content/uploads/2016/10/clothes-2-25-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px">		<span class="product-title">Stride rite made2play sneaker boot</span>
-                                </a>
-                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>55</span>
-                            </li>
-                        </ul>
-                    </aside>
+
+                    @php $products = \App\Services\ServiceYouWatchedProduct::listProducts(false, 4); @endphp
+                    @include('site.includes.widget_footer', ['title' => 'Вы смотрели', 'products' => $products])
+
+                    @php
+                        $products = \App\Models\Product::productInfoWith()
+                                ->limit(4)
+                                ->filtersAttributes(['tip_tovara' => 'new'])
+                                //->where('stock', '>', 0)
+                                ->inRandomOrder()
+                                ->get();
+                    @endphp
+                    @include('site.includes.widget_footer', ['title' => 'Новинки', 'products' => $products])
+
+                    @php
+                        $products = \App\Models\Product::productInfoWith()
+                                ->limit(4)
+                                //->where('stock', '>', 0)
+                                ->OrderBy('id', 'DESC')
+                                ->get();
+                    @endphp
+                    @include('site.includes.widget_footer', ['title' => 'Новые поступления', 'products' => $products])
+
                 </div>
                 <div class="row bottom ">
                     <div class="col-xs-12">
@@ -508,11 +374,9 @@
                     <br/><br/>
                     <div class="col-xs-6 col-xs-push-6">
                         <div class="soc">
-
                             <a href="{{ config('shop.social_network.instagram') }}" target="_blank" title="Вы в Instagram">
                                 <i class="soc-img soc-instagram fa fa-instagram"></i>
                             </a>
-
                             <!--
                             <a href="#" target="_blank">
                                 <svg class="soc-img soc-facebook">
@@ -535,132 +399,27 @@
                     <div class="col-xs-6 col-xs-pull-6 copyright">
                         Copyright &copy;{{date('Y')}} Все права защищены.
                     </div>
-
                 </div>
             </div>
         </div>
     </footer>
 </div>
-<!-- #wrap -->
+
+<!-- #wrap
 <div id="ip-quickview"></div>
+-->
 
-
+@include('includes.quickView')
 
 <!-- Mask --->
 <script type="text/javascript" src="/site/js/jquery.maskedinput.min.js"></script>
 <!-- Mask --->
 
 <script src="/global/script.js"></script>
-<script src="/site/js/script.js"></script>
+<script src="/site/js/script.js?r={{rand(1, 11000000)}}"></script>
 <script src="/site/js/slick.min.js"></script>
 <script src="/site/js/main.js?r={{rand(1, 11000000)}}"></script>
 
-
-<!--
-<script type="text/javascript">
-    var sbiajaxurl = "wp-admin/admin-ajax.php";
-</script>
-<script type="text/javascript">
-    var c = document.body.className;
-    c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
-    document.body.className = c;
-</script>
-<script type="text/javascript">
-    var wc_product_block_data = JSON.parse( decodeURIComponent( '%7B%22min_columns%22%3A1%2C%22max_columns%22%3A6%2C%22default_columns%22%3A3%2C%22min_rows%22%3A1%2C%22max_rows%22%3A6%2C%22default_rows%22%3A1%2C%22thumbnail_size%22%3A210%2C%22placeholderImgSrc%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fwp-content%5C%2Fthemes%5C%2Fkidz%5C%2Fimg%5C%2Fplaceholder.png%22%2C%22min_height%22%3A500%2C%22default_height%22%3A500%2C%22isLargeCatalog%22%3Afalse%2C%22limitTags%22%3Afalse%2C%22hasTags%22%3Afalse%2C%22productCategories%22%3A%5B%7B%22term_id%22%3A15%2C%22name%22%3A%22Uncategorized%22%2C%22slug%22%3A%22uncategorized%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A15%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A0%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Funcategorized%5C%2F%22%7D%2C%7B%22term_id%22%3A26%2C%22name%22%3A%22Accessories%22%2C%22slug%22%3A%22accessories%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A26%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A9%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Faccessories%5C%2F%22%7D%2C%7B%22term_id%22%3A29%2C%22name%22%3A%22Activewear%22%2C%22slug%22%3A%22activewear%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A29%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A23%2C%22count%22%3A5%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-boys%5C%2Factivewear%5C%2F%22%7D%2C%7B%22term_id%22%3A30%2C%22name%22%3A%22Activewear%22%2C%22slug%22%3A%22activewear-for-girls%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A30%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A24%2C%22count%22%3A5%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-girls%5C%2Factivewear-for-girls%5C%2F%22%7D%2C%7B%22term_id%22%3A31%2C%22name%22%3A%22Bottoms%22%2C%22slug%22%3A%22bottoms%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A31%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A23%2C%22count%22%3A5%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-boys%5C%2Fbottoms%5C%2F%22%7D%2C%7B%22term_id%22%3A32%2C%22name%22%3A%22Bottoms%22%2C%22slug%22%3A%22bottoms-for-girls%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A32%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A24%2C%22count%22%3A7%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-girls%5C%2Fbottoms-for-girls%5C%2F%22%7D%2C%7B%22term_id%22%3A33%2C%22name%22%3A%22Bottoms%22%2C%22slug%22%3A%22bottoms-for-babies%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A33%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A25%2C%22count%22%3A10%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-babies%5C%2Fbottoms-for-babies%5C%2F%22%7D%2C%7B%22term_id%22%3A34%2C%22name%22%3A%22Boy%20Shoes%22%2C%22slug%22%3A%22boy-shoes%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A34%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A27%2C%22count%22%3A4%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Fshoes%5C%2Fboy-shoes%5C%2F%22%7D%2C%7B%22term_id%22%3A35%2C%22name%22%3A%22Dresses%20%26amp%3B%20Rompers%22%2C%22slug%22%3A%22dresses-rompers%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A35%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A24%2C%22count%22%3A5%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-girls%5C%2Fdresses-rompers%5C%2F%22%7D%2C%7B%22term_id%22%3A25%2C%22name%22%3A%22For%20Babies%22%2C%22slug%22%3A%22for-babies%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A25%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A18%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-babies%5C%2F%22%7D%2C%7B%22term_id%22%3A23%2C%22name%22%3A%22For%20Boys%22%2C%22slug%22%3A%22for-boys%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A23%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A9%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-boys%5C%2F%22%7D%2C%7B%22term_id%22%3A24%2C%22name%22%3A%22For%20Girls%22%2C%22slug%22%3A%22for-girls%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A24%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A10%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-girls%5C%2F%22%7D%2C%7B%22term_id%22%3A28%2C%22name%22%3A%22Gifts%22%2C%22slug%22%3A%22gifts%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A28%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A27%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Fgifts%5C%2F%22%7D%2C%7B%22term_id%22%3A36%2C%22name%22%3A%22Girl%20Shoes%22%2C%22slug%22%3A%22girl-shoes%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A36%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A27%2C%22count%22%3A5%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Fshoes%5C%2Fgirl-shoes%5C%2F%22%7D%2C%7B%22term_id%22%3A37%2C%22name%22%3A%22Jackets%20%26amp%3B%20Outerwear%22%2C%22slug%22%3A%22jackets-outerwear%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A37%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A24%2C%22count%22%3A7%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-girls%5C%2Fjackets-outerwear%5C%2F%22%7D%2C%7B%22term_id%22%3A38%2C%22name%22%3A%22Pajamas%22%2C%22slug%22%3A%22pajamas%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A38%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A23%2C%22count%22%3A4%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-boys%5C%2Fpajamas%5C%2F%22%7D%2C%7B%22term_id%22%3A39%2C%22name%22%3A%22Pajamas%22%2C%22slug%22%3A%22pajamas-for-babies%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A39%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A25%2C%22count%22%3A5%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-babies%5C%2Fpajamas-for-babies%5C%2F%22%7D%2C%7B%22term_id%22%3A27%2C%22name%22%3A%22Shoes%22%2C%22slug%22%3A%22shoes%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A27%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A9%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Fshoes%5C%2F%22%7D%2C%7B%22term_id%22%3A40%2C%22name%22%3A%22Shorts%22%2C%22slug%22%3A%22shorts%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A40%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A25%2C%22count%22%3A8%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-babies%5C%2Fshorts%5C%2F%22%7D%2C%7B%22term_id%22%3A41%2C%22name%22%3A%22Socks%20%26amp%3B%20Tights%22%2C%22slug%22%3A%22socks-tights%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A41%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A24%2C%22count%22%3A4%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-girls%5C%2Fsocks-tights%5C%2F%22%7D%2C%7B%22term_id%22%3A42%2C%22name%22%3A%22Sweaters%22%2C%22slug%22%3A%22sweaters%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A42%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A23%2C%22count%22%3A7%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-boys%5C%2Fsweaters%5C%2F%22%7D%2C%7B%22term_id%22%3A43%2C%22name%22%3A%22Sweaters%22%2C%22slug%22%3A%22sweaters-for-babies%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A43%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A25%2C%22count%22%3A5%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-babies%5C%2Fsweaters-for-babies%5C%2F%22%7D%2C%7B%22term_id%22%3A44%2C%22name%22%3A%22Tops%22%2C%22slug%22%3A%22tops%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A44%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A25%2C%22count%22%3A10%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-babies%5C%2Ftops%5C%2F%22%7D%2C%7B%22term_id%22%3A45%2C%22name%22%3A%22Tops%20%26amp%3B%20Bodysuits%22%2C%22slug%22%3A%22tops-bodysuits%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A45%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A23%2C%22count%22%3A4%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2Fproduct-category%5C%2Ffor-boys%5C%2Ftops-bodysuits%5C%2F%22%7D%5D%2C%22homeUrl%22%3A%22https%3A%5C%2F%5C%2Fparkofideas.com%5C%2Fkidz%5C%2Fdemo2%5C%2F%22%7D' ) );
-</script>
-<script type="text/javascript" src="/site/js-template/jquery.js"></script>
-<script type="text/javascript">
-    var ideapark_svg_content = "";
-    var ajax = new XMLHttpRequest();
-    ajax.open("GET", "wp-content/themes/kidz/img/sprite.svg", true);
-    ajax.send();
-    ajax.onload = function (e) {
-        ideapark_svg_content = ajax.responseText;
-        ideapark_download_svg_onload();
-    };
-    function ideapark_download_svg_onload() {
-        if (typeof document.body != "undefined" && document.body != null && typeof document.body.childNodes != "undefined" && typeof document.body.childNodes[0] != "undefined") {
-            var div = document.createElement("div");
-            div.className = "svg-sprite-container";
-            div.innerHTML = ideapark_svg_content;
-            document.body.insertBefore(div, document.body.childNodes[0]);
-        } else {
-            setTimeout(ideapark_download_svg_onload, 100);
-        }
-    }
-
-</script>
-<script type="text/javascript" src="/site/js-template/jquery-migrate.min.js"></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var ip_wishlist_vars = {"cookieName":"ip-wishlist-items","titleAdd":"Add to Wishlist","titleRemove":"Remove from Wishlist"};
-    /* ]]> */
-</script>
-<script type="text/javascript" src="/site/js-template/frontend.min.js"></script>
-<script type="text/javascript" src="/site/js-template/jquery.blockUI.min.js"></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var wc_add_to_cart_params = {"ajax_url":"\/kidz\/demo2\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/kidz\/demo2\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"https:\/\/parkofideas.com\/kidz\/demo2\/cart\/","is_cart":"","cart_redirect_after_add":"no"};
-    /* ]]> */
-</script>
-<script type="text/javascript" src="/site/js-template/add-to-cart.min.js"></script>
-<script type="text/javascript" src="/site/js-template/js.cookie.min.js"></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var woocommerce_params = {"ajax_url":"\/kidz\/demo2\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/kidz\/demo2\/?wc-ajax=%%endpoint%%"};
-    /* ]]> */
-</script>
-<script type="text/javascript" src="/site/js-template/woocommerce.min.js"></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var wc_cart_fragments_params = {"ajax_url":"\/kidz\/demo2\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/kidz\/demo2\/?wc-ajax=%%endpoint%%","cart_hash_key":"wc_cart_hash_64f931c23d077319fc0e7f381869c4e0","fragment_name":"wc_fragments_64f931c23d077319fc0e7f381869c4e0","request_timeout":"5000"};
-    /* ]]> */
-</script>
-<script type="text/javascript" src="/site/js-template/cart-fragments.min.js"></script>
-<script type="text/javascript" src="/site/js-template/underscore.min.js"></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var _wpUtilSettings = {"ajax":{"url":"\/kidz\/demo2\/wp-admin\/admin-ajax.php"}};
-    /* ]]> */
-</script>
-<script type="text/javascript" src="/site/js-template/wp-util.min.js"></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var wc_add_to_cart_variation_params = {"wc_ajax_url":"\/kidz\/demo2\/?wc-ajax=%%endpoint%%","i18n_no_matching_variations_text":"Sorry, no products matched your selection. Please choose a different combination.","i18n_make_a_selection_text":"Please select some product options before adding this product to your cart.","i18n_unavailable_text":"Sorry, this product is unavailable. Please choose a different combination."};
-    /* ]]> */
-</script>
-<script type="text/javascript" src="/site/js-template/add-to-cart-variation.min.js"></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var ideapark_wc_add_to_cart_variation_vars = {"in_stock_svg":"<svg><use xlink:href=\"#svg-check\" \/><\/svg>","out_of_stock_svg":"<svg><use xlink:href=\"#svg-close\" \/><\/svg>"};
-    /* ]]> */
-</script>
-<script type="text/javascript" src="/site/js-template/add-to-cart-variation-3-fix.min.js"></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var ideapark_wp_vars = {
-        "themeDir":"\/usr\/www\/parkofideas.com\/kidz\/demo2\/wp-content\/themes\/kidz",
-        "themeUri":"https:\/\/parkofideas.com\/kidz\/demo2\/wp-content\/themes\/kidz",
-        "ajaxUrl":"https:\/\/parkofideas.com\/kidz\/demo2\/wp-admin\/admin-ajax.php",
-        "searchUrl":"https:\/\/parkofideas.com\/kidz\/demo2\/?s=",
-        "svgUrl":"",
-        "isRtl":"",
-        "searchType":"search-type-1",
-        "shopProductModal":"1",
-        "stickyMenu":"1",
-        "arrowLeft":"<a class=\"slick-prev normal\"><span><svg><use xlink:href=\"#svg-angle-left\" \/><\/svg><\/span><\/a>",
-        "arrowRight":"<a class=\"slick-next normal\"><span><svg><use xlink:href=\"#svg-angle-right\" \/><\/svg><\/span><\/a>"
-    };
-    /* ]]> */
-</script>
-<script type="text/javascript">
-    document.addEventListener("DOMContentLoaded",function(){setTimeout(function(){(function(d, w, c) {w.ChatraID = 'zhn2DbkmMmBtn4k9P';var s = d.createElement('script');w[c] = w[c] || function() {(w[c].q = w[c].q || []).push(arguments);};s.async = true;s.src = 'https://call.chatra.io/chatra.js';if (d.head) d.head.appendChild(s);
-        s.onload = function() {document.body.insertAdjacentHTML("beforeEnd", '<a href="#"><img class="ip-message-us" src="wp-content/plugins/ideapark-theme/img/message-us.svg"></a><a href="https://themeforest.net/item/kidz-baby-store-woocommerce-theme/17688768"><img class="ip-buy-now" src="wp-content/plugins/ideapark-theme/img/buy-now.svg"></a>');var button=document.querySelector(".ip-message-us");button.onclick=function(){ Chatra('openChat', true); return false;};};
-    })(document, window, 'Chatra');}, 5000);})
-</script>
-<script type="text/javascript" src="/site/js-template/min.js"></script>
-<script type="text/javascript" src="/site/js-template/wp-embed.min.js"></script>
-   -->
 
 
 </body>

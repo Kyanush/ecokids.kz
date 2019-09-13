@@ -6,6 +6,9 @@ function addToCartSite(self, product_id, quantity){
         header.listCart();
         header.cartTotal();
 
+        widget_shopping_cart.listCart();
+        widget_shopping_cart.cartTotal();
+
         Swal.fire({
             title: 'Товар в корзине',
             type: 'success',
@@ -21,7 +24,7 @@ function addToCartSite(self, product_id, quantity){
         });
     }
 }
-/*
+
 var quickView = new Vue({
     el: '#quickView',
     data: {
@@ -29,10 +32,36 @@ var quickView = new Vue({
         detailUrlProduct: '',
         pathPhoto: '',
         price: 0,
-        attributes: []
+        attributes: [],
+        loading: false,
+        quantity: 1,
+        features_wishlist: false
     },
     methods:{
-        getProduct(product_id){
+        quantityMinus(){
+            if(this.quantity > 1)
+                this.quantity--;
+        },
+        quantityPlus(){
+            this.quantity++;
+        },
+        addToCartSite(){
+            if(this.quantity > 0)
+                addToCartSite(this, this.product.id, this.quantity);
+        },
+        productFeaturesWishlist(){
+            productFeaturesWishlist(false, this.product.id);
+            var self = this;
+            setTimeout(function () {
+                getProduct(this.product.id, function(result){
+                    self.features_wishlist = result.features_wishlist;
+                });
+            }.bind(this), 1000);
+        },
+        getProduct(product_id)
+        {
+            this.loading = true;
+
             var self = this;
             getProduct(product_id, function(result){
                 self.product          = result.product;
@@ -40,12 +69,21 @@ var quickView = new Vue({
                 self.pathPhoto        = result.pathPhoto;
                 self.price            = result.price;
                 self.attributes       = result.attributes;
-
-                modalShow('#quickView');
+                self.features_wishlist = result.features_wishlist;
+                $('body').addClass('quickview-open');
+                self.loading = false;
             });
+        },
+        close(){
+            $('body').removeClass('quickview-open');
+            this.product = [];
+            this.detailUrlProduct = '';
+            this.pathPhoto = '';
+            this.price = 0;
+            this.attributes = [];
         }
     }
-});*/
+});
 
 
 var search = new Vue({
@@ -76,6 +114,62 @@ var search = new Vue({
 
 var header = new Vue({
     el: '#header',
+    data () {
+        return {
+            cart_total: {
+                sum: 0,
+                quantity: 0
+            },
+            list_cart:  null,
+            product_features_compare_count: 0,
+            product_features_wishlist_count: 0
+        }
+    },
+    methods:{
+        listCart(){
+            axios.post('/list-cart').then((res)=>{
+                this.list_cart = res.data;
+            });
+        },
+        deleteProductQuantity(product_id){
+            axios.post('/cart-delete/' + product_id).then((res)=>{
+                if(res.data)
+                {
+                    this.listCart();
+                    this.cartTotal();
+                    checkout.listCart();
+                    checkout.cartTotal();
+                }
+            });
+        },
+        getProductFeaturesCompareCount(){
+            axios.get('/product-features-compare-count').then((res)=>{
+                this.product_features_compare_count = res.data;
+            });
+        },
+        getProductFeaturesWishlistCount(){
+            axios.get('/product-features-wishlist-count').then((res)=>{
+                this.product_features_wishlist_count = res.data;
+            });
+        },
+        cartTotal(){
+            axios.get('/cart-total/0').then((res)=>{
+                this.cart_total.sum      = res.data.sum;
+                this.cart_total.quantity = res.data.quantity;
+            });
+        }
+    },
+    created(){
+        this.listCart();
+        this.cartTotal();
+        this.getProductFeaturesCompareCount();
+        this.getProductFeaturesWishlistCount();
+    }
+});
+
+
+var widget_shopping_cart = new Vue({
+    el: '#widget_shopping_cart',
     data () {
         return {
             cart_total: {
