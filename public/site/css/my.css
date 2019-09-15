@@ -9,3 +9,89 @@ body.custom-background {
 .red{
     color: #FF5B4B;
 }
+.kok{
+    color: #31ACD8;
+}
+
+
+table>tbody>tr>td,
+table>tbody>tr>th,
+table>tfoot>tr>td,
+table>tfoot>tr>th,
+table>thead>tr>td,
+table>thead>tr>th {
+    padding: 8px 8px 8px 0px;
+    line-height: 1.42857143;
+    vertical-align: top;
+}
+#filterpro #price_start,
+#filterpro #price_end{
+    width: 100px;
+}
+#filterpro .color{
+    cursor: pointer;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    border: solid 1px #999;
+}
+#filterpro .color span{
+    position: absolute;
+    margin-left: 27px;
+}
+#filterpro b{
+    color: #31acd8;
+}
+#filterpro label{
+    text-transform: unset;
+}
+
+#one-click-order input,
+#one-click-order table,
+#callback input,
+#callback table
+{
+    width: 100%;
+}
+.my-account-menu{
+    padding-left: 15px;
+}
+.my-account-menu a{
+    color: #31acd8;
+}
+.my-account-menu a:hover{
+    text-decoration: underline;
+}
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.ajax-loader {
+    display: none;
+    width: 20px;
+    margin-right: 5px;
+}
+.ajax-loader.active{
+    display: unset;
+}
+.callback-button {
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    padding: 15px 20px;
+    background-color: #0e8ce4;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 35px;
+    cursor: pointer;
+    z-index: 1000;
+    border: 3px solid #ffffff;
+}
+.blocker{
+    z-index: 1000000000000000000000000000;
+}

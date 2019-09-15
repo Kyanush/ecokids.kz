@@ -211,9 +211,19 @@ optgroup {
     font-weight: bold
 }
 
-table {
-    border-collapse: collapse;
-    border-spacing: 0
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #e9ecef;
+}
+.table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
 }
 
 td,
@@ -2288,7 +2298,7 @@ body {
 
 a {
     cursor: pointer;
-    color: #404E65;
+    color: #31acd8;
     text-decoration: none;
 }
 
@@ -2363,6 +2373,7 @@ input[type=password],
 input[type=tel],
 input[type=search],
 input[type=number],
+select,
 textarea {
     border: solid 1px #D5E0EC;
     padding: 5px 12px;
@@ -4591,10 +4602,6 @@ select.styled {
     padding: 6px 0 4px 0;
 }
 
-.comment-form .comment-form-comment label {
-    display: none;
-}
-
 .comment-form textarea {
     width: 100%;
 }
@@ -6111,6 +6118,7 @@ ul.products .product-category {
     padding-left: 15px;
     padding-right: 15px;
     margin-bottom: 50px;
+    float: left;
 }
 
 .sidebar-disable .products .product-category {
@@ -7123,6 +7131,13 @@ a.ip-wishlist-btn {
     display: block;
 }
 
+.ip-p-c .product_meta .features-compare.active{
+    color: #31ACD8;
+}
+.ip-p-c .product_meta .features-compare{
+    font-size: 16px;
+}
+
 .ip-p-c .product_meta>span>span {
     color: #404E65;
 }
@@ -7257,17 +7272,17 @@ a.ip-wishlist-btn {
 
 .woocommerce-tabs .wc-tab {
     display: none;
-    opacity: 0;
     -webkit-transition: opacity 0.3s linear;
     transition: opacity 0.3s linear;
 }
 
 .woocommerce-tabs .wc-tab.current {
-    opacity: 1;
+    display: block;
 }
 
 #tab-additional_information table {
     margin: 0 auto;
+    max-width: 500px;
 }
 
 #tab-additional_information th {
@@ -8336,6 +8351,7 @@ div.woocommerce-error a.button,
 #customer_details input[type=url],
 #customer_details input[type=tel],
 #customer_details input[type=password],
+#customer_details select,
 #customer_details textarea,
 .woocommerce-form-login input[type=text],
 .woocommerce-form-login input[type=email],
@@ -10685,6 +10701,9 @@ div.woocommerce-error a.button,
     #tab-reviews .comment-form-author {
         margin-bottom: 15px;
     }
+    #tab-reviews #review_form_wrapper {
+        padding-left: 0;
+    }
     .ip-qv-product-image,
     .ip-qv-product-summary {
         float: none;
@@ -11845,6 +11864,11 @@ a.ip-wishlist-btn,
     .home-tabs,
     .woocommerce-tabs .tabs {
         border-color: #31acd8;
+    }
+    .woocommerce-tabs .wc-tab ul{
+        padding: 0;
+        margin: 0;
+        padding-left: 10px;
     }
     .main-menu .product-categories>ul li.menu-item.has-children:after,
     .main-menu .product-categories>ul li.menu-item.menu-item-has-children:after {

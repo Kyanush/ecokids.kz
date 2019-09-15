@@ -6,7 +6,7 @@
 
 @section('content')
 
-        @include('site.includes.breadcrumb', ['breadcrumbs' => [
+        @php $breadcrumbs = [
            [
                'title' => 'Главная',
                'link'  => '/',
@@ -19,21 +19,23 @@
                'title' => $news->title,
                'link'  => ''
            ]
-       ]])
+       ];
+       @endphp
 
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <h1>
-                    {{ $news->title }}
-                </h1>
-                <div>
-                    <p><i class="fa fa-clock-o firm-red"></i> {{ \App\Tools\Helpers::ruDateFormat($news->created_at) }}</p>
-                    {!! $news->detail_text !!}
+        <div class="container post-container">
+            <div class="row">
+                <div class="col-md-12">
+                    @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+                    <h1>{{ $news->title }}</h1>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><i class="fa fa-clock-o firm-red"></i> {{ \App\Tools\Helpers::ruDateFormat($news->created_at) }}</p>
+                            {!! $news->detail_text !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
 
 @endsection

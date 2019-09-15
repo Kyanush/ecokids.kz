@@ -54,6 +54,20 @@ class CartController extends Controller
         ]);
     }
 
+    public function cart(){
+        $seo = Seo::pageSeo('cart');
+
+        $user = null;
+        if(Auth::check())
+            $user = User::with('addresses')->find(Auth::user()->id);
+
+        return view('site.cart',[
+            'seo'  => $seo,
+            'user' => $user
+        ]);
+    }
+
+
     public function listCart(){
         $cartProductsList = ServiceCart::cartProductsList();
 

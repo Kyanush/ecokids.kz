@@ -9,7 +9,7 @@
         'news_path_file' => 'uploads/news/',
 
         'social_network' => [
-            'instagram'       => 'https://www.instagram.com/mihome.kz',
+            'instagram'       => 'https://www.instagram.com/kidkidskz',
             'instagram_token' => '4233405290.1677ed0.e5692138251945c9a0f76180a4885e49'
         ],
 
@@ -25,7 +25,7 @@
 
         'address' => [
             [
-                "streetAddress" => "Жибек Жолы 115, 3 этаж, офис 301/1",
+                "streetAddress" => "",
                 "addressLocality" => "г. Алматы",
                 "postalCode" => "050004",
                 "addressCountry" => "Казахстан",
@@ -37,7 +37,7 @@
             ]
         ],
 
-        'site_email' => 'info@mihome.kz',
-        'logo' => env('APP_URL')    . '/site/images/logo.jpeg',
-        'favicon' => env('APP_URL') . '/site/images/favicon.jpeg'
+        'site_email' => 'info@ecokids.kz',
+        'logo' => env('APP_URL')    . '/site/images/logo.png',
+        'favicon' => env('APP_URL') . '/favicon.ico'
     ];

@@ -21,7 +21,7 @@
                 <div class="bgimg" style="background-image: url('{{ $item->pathImage(true) }}');">
                     <div class="inner">
                         <h3>{{ $item->name }}</h3>
-                        <h4>$75 - SHOP NOW</h4>
+                        <h4>Подробнее</h4>
                     </div>
                     <a class="whole" href="{{ $item->link }}"></a>
                 </div>

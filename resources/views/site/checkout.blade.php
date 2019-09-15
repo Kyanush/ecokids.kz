@@ -6,210 +6,292 @@
 
 @section('content')
 
+@section('body_class') woocommerce-checkout @stop
+
         <?php $breadcrumbs = [
             [
                 'title' => 'Главная',
                 'link'  => '/'
             ],
             [
+                'title' => 'Корзина',
+                'link'  => route('cart')
+            ],
+            [
                 'title' => $seo['title'],
                 'link'  => ''
             ]
         ];?>
-        @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 
-        <!-- SECTION -->
-        <div class="section" id="checkout">
-            <!-- container -->
+        <header class="main-header">
             <div class="container">
-                <!-- row -->
-
-                <span v-if="list_cart.length == 0">
-                    <p v-if="order_id > 0">
-                        Ваш заказ успешно оформлен, номер заказа <a v-bind:href="'/order-history/' + order_id">№:@{{ order_id }}</a>
-                    </p>
-                    <p v-else>
-                        Ваша корзина пуста!
-                    </p>
-                </span>
-
-                <div class="row" v-else>
-
-                    <div class="col-md-5">
-                        <!-- Billing Details -->
-                        <div class="billing-details">
-                            <div class="section-title">
-                                <h3 class="title">Покупатель</h3>
-                            </div>
-                            <div class="form-group">
-                                <input type="text"
-                                       v-model="user.phone"
-                                       class="input phone-mask"
-                                       @blur="user.phone = $event.target.value;"
-                                       placeholder="Мобильный телефон *"/>
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="email"  v-model="user.email"  id="customer_email" placeholder="Электронная почта *">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text"  v-model="user.name" id="customer_firstname" placeholder="Имя"/>
-                            </div>
-
-                            <div class="shiping-details">
-                                <div class="section-title">
-                                    <h3 class="title">Оплата</h3>
-                                </div>
-                                <div class="payment-method">
-                                    <div @click="selectedPayment(item)" class="input-radio" v-for="(item, index) in list_payments">
-                                        <input type="radio" name="payment" :id="'payment' + index" :checked="payment.id == item.id"/>
-                                        <label :for="'payment' + index">
-                                            <span></span>
-                                            @{{ item.name }}
-                                            <img width="20" v-bind:src="item.logo">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="shiping-details">
-                                <div class="section-title">
-                                    <h3 class="title">Доставка</h3>
-                                </div>
-                                <div class="payment-method">
-                                    <div @click="selectedCarrier(item)" class="input-radio" v-for="(item, index) in list_carriers">
-                                        <input type="radio" name="carrier" :id="'carrier' + index" :checked="item.id == carrier.id"/>
-                                        <label :for="'carrier' + index">
-                                            <span></span>
-                                            @{{ item.name }} @{{ item.format_price }}
-                                        </label>
-                                        <div class="caption">
-                                            <p v-html="item.delivery_text"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="shiping-details" v-if="carrier.id == 1">
-                                <div class="section-title">
-                                    <h3 class="title">Укажите адрес доставки</h3>
-                                </div>
-                                <div class="payment-method">
-                                    <div class="form-group" v-if="addresses.length > 0">
-                                        <select v-model="address.id" class="form-control">
-                                            <option value="0">Новый адрес</option>
-                                            <option v-bind:value="item.id" v-for="item in addresses">
-                                                @{{ item.city }} - @{{ item.address }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group" v-if="address.id == 0">
-                                        <input v-model="address.address" type="text" class="input" placeholder="Адрес *"/>
-                                    </div>
-                                    <div class="form-group" v-if="address.id == 0">
-                                        <input v-model="address.city" type="text" class="input" placeholder="Город *"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /Billing Details -->
-
-                        <!-- Order notes -->
-                        <div class="order-notes">
-                            <textarea class="input" v-model="comment" name="comment" id="comment" placeholder="Комментарий к заказу" data-reload-payment-form="true"></textarea>
-                        </div>
-                        <!-- /Order notes -->
-
+                <div class="row">
+                    <div class="col-lg-12">
+                        @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+                        <h1>{{ $seo['title'] }}</h1>
                     </div>
-
-                    <!-- Order Details -->
-                    <div class="col-md-7 order-details">
-                        <div class="section-title text-center">
-                            <h3 class="title">Ваш заказ</h3>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Товар</th>
-                                    <th></th>
-                                    <th>Кол-во</th>
-                                    <th width="150">Цена</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item, index) in list_cart">
-                                        <td>
-                                            <a v-bind:href="item.product_url">
-                                                <img width="40"
-                                                     v-bind:src="item.product_photo"
-                                                     v-bind:alt="item.product_name"
-                                                     v-bind:title="item.product_name">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a  v-bind:href="item.product_url">
-                                                @{{ item.product_name }}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <div class="input-number" style="width: 70px;">
-                                                <input type="number" v-model="item.quantity" disabled/>
-                                                <span class="qty-up"   @click="increaseProductQuantity(item, index)">+</span>
-                                                <span class="qty-down" @click="decreaseProductQuantity(item, index)">-</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            @{{ item.product_specific_price }}
-                                            <del v-if="item.product_price != item.product_specific_price">
-                                                <p>
-                                                    @{{ item.product_price }}
-                                                </p>
-                                            </del>
-                                            <p v-if="item.quantity > 1">
-                                                @{{ item.quantity }} шт. x @{{ item.sum }}
-                                            </p>
-                                        </td>
-                                        <td class="text-center">
-                                            <i title="Удалить" class="fa fa-remove firm-red cursor-pointer" @click="deleteProductQuantity(item.product_id)"></i>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="order-summary" >
-                            <div class="order-col">
-                                <div>Доставка:</div>
-                                <div><strong>@{{ carrier.format_price }}</strong></div>
-                            </div>
-                            <div class="order-col">
-                                <div>Количество:</div>
-                                <div><strong>@{{ cart_total.quantity }}</strong></div>
-                            </div>
-                            <div class="order-col">
-                                <div><strong>ИТОГО</strong></div>
-                                <div><strong class="order-total">@{{ cart_total.sum }}</strong></div>
-                            </div>
-                        </div>
-
-                        <a class="primary-btn order-submit" @click="checkout">
-                            <img :class="{ 'active': checkout_wait}" class="ajax-loader" src="/site/images/ajax-loader.gif"/>
-                            Оформить заказ
-                        </a>
-
-                    </div>
-                    <!-- /Order Details -->
                 </div>
-
-                <!-- /row -->
             </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
+        </header>
 
+        <div class="container post-container" id="checkout">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <span v-if="list_cart.length == 0">
+                        <p v-if="order_id > 0" class="kok">
+                            Ваш заказ успешно оформлен, номер заказа <b><a v-bind:href="'/order-history/' + order_id" class="kok">№:@{{ order_id }}</a></b>
+                        </p>
+                        <p v-else>
+                            Ваша корзина пуста!
+                        </p>
+                    </span>
+
+                    <section v-else role="main" class="post-open">
+                        <article id="post-7" class="post-7 page type-page status-publish hentry">
+                            <div class="shop-content">
+                                <div class="woocommerce">
+                                    <div class="checkout woocommerce-checkout">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="col2-set" id="customer_details">
+
+                                                    <div class="col-1">
+                                                        <div class="woocommerce-billing-fields">
+                                                            <h3>Покупатель</h3>
+                                                            <div class="woocommerce-billing-fields__field-wrapper">
+
+                                                                <p class="form-row form-row-wide validate-required">
+                                                                    <label class="">Мобильный телефон&nbsp;
+                                                                        <abbr class="required" title="required">*</abbr>
+                                                                    </label>
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <input type="text"
+                                                                               v-model="user.phone"
+                                                                               class="input-text phone-mask"
+                                                                               @blur="user.phone = $event.target.value;"
+                                                                               placeholder="Мобильный телефон *"/>
+                                                                    </span>
+                                                                </p>
+
+                                                                <p class="form-row form-row-wide validate-required">
+                                                                    <label class="">E-mail&nbsp;
+                                                                        <abbr class="required" title="required">*</abbr>
+                                                                    </label>
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <input class="input-text"
+                                                                               type="email"
+                                                                               v-model="user.email"
+                                                                               placeholder="Электронная почта *">
+                                                                    </span>
+                                                                </p>
+
+                                                                <p class="form-row form-row-wide validate-required">
+                                                                    <label class="">Имя&nbsp;
+                                                                        <abbr class="required" title="required">*</abbr>
+                                                                    </label>
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <input class="input-text"
+                                                                               type="text"
+                                                                               v-model="user.name"
+                                                                               placeholder="Имя"/>
+                                                                    </span>
+                                                                </p>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-2">
+                                                        <div class="woocommerce-additional-fields">
+                                                            <h3>Оплата/Доставка</h3>
+                                                            <div class="woocommerce-additional-fields__field-wrapper">
+                                                                <div class="form-row form-row-wide validate-required">
+                                                                    <label class="">Оплата&nbsp;
+                                                                        <abbr class="required" title="required">*</abbr>
+                                                                    </label>
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6 col-md-12" v-for="(item, index) in list_payments">
+                                                                                <div :for="'payment' + index" @click="selectedPayment(item)">
+                                                                                    <input type="radio" name="payment" :id="'payment' + index" :checked="payment.id == item.id"/>
+                                                                                    @{{ item.name }}
+                                                                                    <img width="20" v-bind:src="item.logo">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="form-row form-row-wide validate-required">
+                                                                    <label class="">Доставка&nbsp;
+                                                                        <abbr class="required" title="required">*</abbr>
+                                                                    </label>
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6 col-md-12" v-for="(item, index) in list_carriers">
+                                                                                <div  :for="'carrier' + index" @click="selectedCarrier(item)">
+                                                                                    <input type="radio" name="carrier" :id="'carrier' + index" :checked="item.id == carrier.id"/>
+                                                                                    @{{ item.name }} @{{ item.format_price }}
+                                                                                </div>
+                                                                                <small v-html="item.delivery_text"></small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-3">
+                                                        <div class="woocommerce-additional-fields">
+                                                            <h3>Комментарий к заказу</h3>
+                                                            <div class="woocommerce-additional-fields__field-wrapper">
+                                                                <p class="form-row notes" id="order_comments_field" data-priority="">
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <textarea v-model="comment"
+                                                                                  name="order_comments"
+                                                                                  class="input-text "
+                                                                                  id="order_comments"
+                                                                                  placeholder="Комментарий к заказу"
+                                                                                  rows="2" cols="5">
+                                                                        </textarea>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4" v-if="carrier.id == 1">
+                                                        <div class="woocommerce-additional-fields">
+                                                            <h3>Укажите адрес доставки</h3>
+                                                            <div class="woocommerce-additional-fields__field-wrapper">
+                                                                <div class="form-row form-row-wide validate-required">
+                                                                    <label class="">Укажите адрес доставки&nbsp;
+                                                                        <abbr class="required" title="required">*</abbr>
+                                                                    </label>
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <select v-model="address.id" class="input-text">
+                                                                            <option value="0">Новый адрес</option>
+                                                                            <option v-bind:value="item.id" v-for="item in addresses">
+                                                                                @{{ item.city }} - @{{ item.address }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="form-row form-row-wide validate-required" v-if="address.id == 0">
+                                                                    <label class="">Адрес&nbsp;
+                                                                        <abbr class="required" title="required">*</abbr>
+                                                                    </label>
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <input v-model="address.address" type="text" class="input-text" placeholder="Адрес *"/>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="form-row form-row-wide validate-required" v-if="address.id == 0">
+                                                                    <label class="">Город&nbsp;
+                                                                        <abbr class="required" title="required">*</abbr>
+                                                                    </label>
+                                                                    <span class="woocommerce-input-wrapper">
+                                                                        <input v-model="address.city" type="text" class="input-text" placeholder="Город *"/>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <!-- col-md-8 -->
+
+                                            <div class="col-md-4">
+                                                <div class="collaterals checkout-collaterals" style="position: relative; top: 0px;">
+                                                    <h3 id="order_review_heading">Ваш заказ</h3>
+                                                    <div id="order_review" class="woocommerce-checkout-review-order">
+
+                                                        <table class="shop_table woocommerce-checkout-review-order-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="product-name">Товар</th>
+                                                                    <th class="product-total">Итого</th>
+                                                                </tr>
+                                                            </thead>
+                                                                <tbody>
+                                                                    <tr class="cart_item"   v-for="(item, index) in list_cart">
+                                                                        <td class="product-name">
+                                                                            <a  v-bind:href="item.product_url">
+                                                                                @{{ item.product_name }}
+                                                                            </a>
+                                                                            &nbsp;
+                                                                            <strong class="product-quantity">× @{{ item.quantity }}</strong>
+                                                                        </td>
+                                                                        <td class="product-total">
+                                                                            <span class="woocommerce-Price-amount amount">
+                                                                                <span class="woocommerce-Price-currencySymbol">
+                                                                                     @{{ item.product_specific_price }}
+                                                                                </span>
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            <tfoot>
+                                                                <tr class="cart-subtotal">
+                                                                    <th>Количество</th>
+                                                                    <td>
+                                                                        <span class="woocommerce-Price-amount amount">
+                                                                            <span class="woocommerce-Price-currencySymbol">
+                                                                                @{{ cart_total.quantity }}
+                                                                            </span>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="cart-subtotal">
+                                                                    <th>Доставка</th>
+                                                                    <td>
+                                                                        <span class="woocommerce-Price-amount amount">
+                                                                            <span class="woocommerce-Price-currencySymbol">
+                                                                                @{{ carrier.format_price }}
+                                                                            </span>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="order-total">
+                                                                    <th>Итого</th>
+                                                                    <td>
+                                                                        <strong>
+                                                                            <span class="woocommerce-Price-amount amount">
+                                                                                <span class="woocommerce-Price-currencySymbol">
+                                                                                     @{{ cart_total.sum }}
+                                                                                </span>
+                                                                            </span>
+                                                                        </strong>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                        <button class="button alt" id="place_order" @click="checkout">
+                                                            <img :class="{ 'active': checkout_wait}" class="ajax-loader" src="/site/images/ajax-loader.gif"/>
+                                                            Оформить заказ
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- col-md-4 -->
+                                        </div>
+                                        <!-- row -->
+                                    </div>
+                                    <!-- checkout woocommerce-checkout -->
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <!-- shop-content -->
+                        </article>
+                    </section>
+
+                </div>
+            </div>
+
+        </div>
 
         <script>
             var checkout = new Vue({
@@ -243,9 +325,6 @@
                         checkout_wait: false
                     }
                 },
-                updated () {
-
-                },
                 methods:{
                     selectedCarrier(item){
                         this.carrier = item;
@@ -256,24 +335,6 @@
                     listCart(){
                         axios.post('/list-cart').then((res)=>{
                             this.list_cart = res.data;
-                        });
-                    },
-                    decreaseProductQuantity(item, index){
-                        if(this.list_cart[index].quantity > 1)
-                            this.cartSave(item.product_id, this.list_cart[index].quantity -1 );
-                    },
-                    increaseProductQuantity(item, index){
-                        this.cartSave(item.product_id, this.list_cart[index].quantity + 1);
-                    },
-                    deleteProductQuantity(product_id){
-                        axios.post('/cart-delete/' + product_id).then((res)=>{
-                            if(res.data)
-                            {
-                                this.listCart();
-                                this.cartTotal();
-                                header.listCart();
-                                header.cartTotal();
-                            }
                         });
                     },
                     cartTotal(){

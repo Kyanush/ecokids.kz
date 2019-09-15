@@ -24,12 +24,11 @@
                         <div id="ip-shop-sidebar">
 
 
-                            <aside class="widget woocommerce widget_shopping_cart" id="widget_shopping_cart">
+                            <aside class="widget woocommerce widget_shopping_cart" id="widget_shopping_cart" v-if="list_cart.length > 0">
                                 <h2 class="widget-title">Корзина</h2>
                                 <div class="hide_cart_widget_if_empty">
                                     <div class="widget_shopping_cart_content">
                                         <ul class="woocommerce-mini-cart cart_list product_list_widget ">
-
                                             <li class="woocommerce-mini-cart-item mini_cart_item" v-for="(item, index) in list_cart">
                                                 <a class="remove remove_from_cart_button" @click="deleteProductQuantity(item.product_id)">×</a>
                                                 <a v-bind:href="item.product_url">
@@ -49,7 +48,6 @@
                                                     </span>
                                                 </span>
                                             </li>
-
                                         </ul>
                                         <p class="woocommerce-mini-cart__total total">
                                             <strong>ИТОГО:</strong>
@@ -76,169 +74,125 @@
                             <aside class="widget woocommerce widget_top_rated_products">
                                 <h2 class="widget-title">Фильтр</h2>
                                 <form id="filterpro">
-                                    <div class="shop_sidebar">
 
-                                        <div class="sidebar_section filter_by_section">
-                                            <div class="sidebar_title">Фильтр</div>
-                                            <div class="sidebar_subtitle">Цена</div>
-                                            <div class="filter_price">
-
+                                    <table>
+                                        <tr>
+                                            <td colspan="2">Цена</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
                                                 <div id="slider-range" class="slider_range"></div>
-
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
                                                 @php
                                                     $filter_price_start = round($filters['price_start'] ?? $priceMinMax['min'] ?? 0);
                                                     $filter_price_end   = round($filters['price_end'] ?? $priceMinMax['max'] ?? 0);
                                                 @endphp
-
-                                                <br/>
-
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-6">
-                                                        <input class="form-control" name="price_start" id="price_start" type="number" value="{{ $filter_price_start }}"/>
-                                                    </div>
-                                                    <div class="col-lg-6 col-6">
-                                                        <input class="form-control" name="price_end"   id="price_end" type="number" value="{{ $filter_price_end }}"/>
-                                                    </div>
-                                                </div>
-
                                                 <input id="catalog-price-min"   type="hidden" value="{{ $priceMinMax['min'] }}"/>
                                                 <input id="catalog-price-max"   type="hidden" value="{{ $priceMinMax['max'] }}"/>
                                                 <input id="catalog-price-value" type="hidden" value='{{ json_encode([$filter_price_start, $filter_price_end]) }}'/>
+                                                <input name="price_start" id="price_start" type="number" value="{{ $filter_price_start }}"/>
+                                            </td>
+                                            <td>
+                                                <input name="price_end"   id="price_end" type="number" value="{{ $filter_price_end }}"/>
+                                            </td>
+                                        </tr>
 
-                                            </div>
-                                        </div>
+
+
+
                                         @foreach($productsAttributesFilters as $attribute)
-                                            @if($attribute->type == 'color')
-                                                <div class="sidebar_section">
-                                                    <div class="sidebar_subtitle color_subtitle">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <b>
                                                         {{ $attribute->name }}
-                                                        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="{{ $attribute->description }}"></i>
-                                                    </div>
-                                                    <ul class="colors_list">
-                                                        @foreach($attribute->values as $value)
-                                                            <li class="color">
+                                                        <i class="fa fa-info-circle" title="{{ $attribute->description }}"></i>
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                            @if($attribute->type == 'color')
+                                                @foreach($attribute->values as $value)
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <label for="attribute_value_{{$attribute->id}}{{$value->id}}">
                                                                 <input onclick="urlParamsGenerate()"
                                                                        id="attribute_value_{{$attribute->id}}{{$value->id}}"
                                                                        value="{{ $value->code }}"
-
                                                                        @if(isset($filters[$attribute->code]))
-                                                                       @if(is_array($filters[$attribute->code]))
-                                                                       @foreach($filters[$attribute->code] as $filter_value)
-                                                                       @if($filter_value == $value->code)
-                                                                       checked
+                                                                           @if(is_array($filters[$attribute->code]))
+                                                                               @foreach($filters[$attribute->code] as $filter_value)
+                                                                                   @if($filter_value == $value->code)
+                                                                                       checked
+                                                                                   @endif
+                                                                               @endforeach
+                                                                           @else
+                                                                               @if($filters[$attribute->code] == $value->code)
+                                                                                   checked
+                                                                               @endif
+                                                                           @endif
                                                                        @endif
-                                                                       @endforeach
-                                                                       @else
-                                                                       @if($filters[$attribute->code] == $value->code)
-                                                                       checked
-                                                                       @endif
-                                                                       @endif
-                                                                       @endif
+                                                                       style="display: none;"
                                                                        type="checkbox"
-                                                                       name="{{ $attribute->code }}" >
-                                                                <label for="attribute_value_{{$attribute->id}}{{$value->id}}">
-                                                                    <a style="background: {{ $value->props }};
-                                                                    @if($value->props == '#ffffff') border: solid 1px #e1e1e1; @endif">
-                                                                    </a>
-                                                                </label>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
+                                                                       name="{{ $attribute->code }}"/>
+                                                                    <span class="color" style="background: {{ $value->props }};@if($value->props == '#ffffff') border: solid 1px #e1e1e1; @endif">
+                                                                        <span>{{ $value->value }}</span>
+                                                                    </span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @else
-                                                <div class="sidebar_section">
-                                                    <div class="sidebar_subtitle brands_subtitle">
-                                                        {{ $attribute->name }}
-                                                        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="{{ $attribute->description }}"></i>
-                                                    </div>
-                                                    <ul class="brands_list {{ !isset($filters[$attribute->code]) ? '' : 'active' }}">
-                                                        @foreach($attribute->values as $value)
-                                                            <li class="brand">
-
-                                                                <input
-                                                                    onclick="urlParamsGenerate()"
-                                                                    id="attribute_value_{{$attribute->id}}{{$value->id}}"
-                                                                    value="{{ $value->code }}"
-
-                                                                    @if(isset($filters[$attribute->code]))
+                                                @foreach($attribute->values as $value)
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <input
+                                                                onclick="urlParamsGenerate()"
+                                                                id="attribute_value_{{$attribute->id}}{{$value->id}}"
+                                                                value="{{ $value->code }}"
+                                                                @if(isset($filters[$attribute->code]))
                                                                     @if(is_array($filters[$attribute->code]))
-                                                                    @foreach($filters[$attribute->code] as $filter_value)
-                                                                    @if($filter_value == $value->code)
-                                                                    checked
-                                                                    @endif
-                                                                    @endforeach
+                                                                        @foreach($filters[$attribute->code] as $filter_value)
+                                                                            @if($filter_value == $value->code)
+                                                                                checked
+                                                                            @endif
+                                                                        @endforeach
                                                                     @else
-                                                                    @if($filters[$attribute->code] == $value->code)
-                                                                    checked
+                                                                        @if($filters[$attribute->code] == $value->code)
+                                                                            checked
+                                                                        @endif
                                                                     @endif
-                                                                    @endif
-                                                                    @endif
-
-                                                                    type="checkbox"
-                                                                    name="{{ $attribute->code }}"/>
-                                                                <label for="attribute_value_{{$attribute->id}}{{$value->id}}">
-                                                                    <a>
-                                                                        {{ $value->value }}
-                                                                    </a>
-                                                                </label>
-
-
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
+                                                                @endif
+                                                                type="checkbox"
+                                                                name="{{ $attribute->code }}"/>
+                                                            <label for="attribute_value_{{$attribute->id}}{{$value->id}}">
+                                                                <a>
+                                                                    {{ $value->value }}
+                                                                </a>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @endif
                                         @endforeach
-
-
-                                                <a onclick="filtersClear()" class="filters-clear">
+                                        <tr>
+                                            <td colspan="2">
+                                                <a onclick="filtersClear()">
                                                     <i class="fa fa-filter"></i>
                                                     Сбросить фильтр
                                                 </a>
+                                            </td>
+                                        </tr>
+                                    </table>
 
 
-                                    </div>
+
+
                                 </form>
                             </aside>
 
 
-                            <!--
-                            <aside id="woocommerce_top_rated_products-3" class="widget woocommerce widget_top_rated_products">
-                                <h2 class="widget-title">Top Rated Products</h2>
-                                <ul class="product_list_widget">
-                                    <li>
-                                        <a href="https://parkofideas.com/kidz/demo2/product/oshkosh-sparkle-cat-crib-shoes/">
-                                            <img width="70" height="70" data-src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-21-70x70.jpg" class="attachment-thumbnail size-thumbnail lazyloaded" alt="" data-srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-21-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-21-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px" sizes="(max-width: 70px) 100vw, 70px" srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-21-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-21-140x140.jpg 140w" src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-21-70x70.jpg">		<span class="product-title">Oshkosh sparkle cat crib shoes</span>
-                                        </a>
-                                        <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>22</span>
-                                    </li>
-                                    <li>
-                                        <a href="https://parkofideas.com/kidz/demo2/product/2-pocket-denim-bodysuit/">
-                                            <img width="70" height="70" data-src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-2-70x70.jpg" class="attachment-thumbnail size-thumbnail lazyloaded" alt="" data-srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-2-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-2-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px" sizes="(max-width: 70px) 100vw, 70px" srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-2-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-2-140x140.jpg 140w" src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-2-70x70.jpg">		<span class="product-title">2-pocket denim bodysuit</span>
-                                        </a>
-                                        <del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>13</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>10</span></ins>
-                                    </li>
-                                    <li>
-                                        <a href="https://parkofideas.com/kidz/demo2/product/sparkle-coin-purse/">
-                                            <img width="70" height="70" data-src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-13-70x70.jpg" class="attachment-thumbnail size-thumbnail lazyloaded" alt="" data-srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-13-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-13-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px" sizes="(max-width: 70px) 100vw, 70px" srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-13-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-13-140x140.jpg 140w" src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-13-70x70.jpg">		<span class="product-title">Sparkle coin purse</span>
-                                        </a>
-                                        <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>7</span>
-                                    </li>
-                                    <li>
-                                        <a href="https://parkofideas.com/kidz/demo2/product/western-chief-monster-crusher-rain-boots/">
-                                            <img width="70" height="70" data-src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-22-70x70.jpg" class="attachment-thumbnail size-thumbnail lazyloaded" alt="" data-srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-22-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-22-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px" sizes="(max-width: 70px) 100vw, 70px" srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-22-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-22-140x140.jpg 140w" src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-2-22-70x70.jpg">		<span class="product-title">Western chief monster crusher rain boots</span>
-                                        </a>
-                                        <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>30</span>
-                                    </li>
-                                    <li>
-                                        <a href="https://parkofideas.com/kidz/demo2/product/flannel-lined-cordroy-overalls/">
-                                            <img width="70" height="70" data-src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-k2-70x70.jpg" class="attachment-thumbnail size-thumbnail lazyloaded" alt="" data-srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-k2-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-k2-140x140.jpg 140w" data-sizes="(max-width: 70px) 100vw, 70px" sizes="(max-width: 70px) 100vw, 70px" srcset="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-k2-70x70.jpg 70w, https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-k2-140x140.jpg 140w" src="https://parkofideas.com/kidz/demo2/wp-content/uploads/2016/10/clothes-k2-70x70.jpg">		<span class="product-title">Flannel-lined condroy overalls</span>
-                                        </a>
-                                        <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>21</span>
-                                    </li>
-                                </ul>
-                            </aside>
-                            ---->
 
 
                             <a class="mobile-sidebar-close" href="#">

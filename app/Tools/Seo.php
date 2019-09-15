@@ -15,9 +15,9 @@ class Seo
 
     public static function main(){
 
-            $title       = "Mi Home - товары Xiaomi для дома | Алматы, Казахстан";
-            $description = "【Mi Home】Ми Хоум ✅ Товары Xiaomi (Сяоми) ⚡Фирменный магазин Xiaomi в Алматы ☝️Новинки ⭐Оригинальный товар ✌Сервисная поддержка ⏳Акции ✅Выгодные цены ✅Быстрая доставка ✅Свежие обзоры техники ⏩Заходи и выбирай, лучшее только у нас!";
-            $keywords    = "xiaomi в казахстане, xiaomi казахстан, xiaomi купить в казахстане, xiaomi цена в казахстане, фирменный магазин xiaomi в алматы, купить сяоми через интернет магазин, магазин xiaomi в алматы, магазин xiaomi, магазин xiaomi алматы, магазин ксиоми алматы";
+            $title       = "Интернет-магазин детских товаров в Казахстане EcoKids.kz";
+            $description = "Интернет-магазин лучших детских товаров в Казахстане - Minim. Быстрая доставка в Алматы, Нур-Султан и другие города. Широкий ассортимент товаров по доступным ценам.";
+            $keywords    = "интернет-магазин, детские, товары, казахстан, ecokids";
 
         return [
             'title'       => $title,
@@ -35,7 +35,7 @@ class Seo
         if($product->seo_keywords)
             $keywords = $product->seo_keywords;
         else
-            $keywords =  "{$category->name}, {$product->name} , купить, НИЗКАЯ ЦЕНА, Скидки, Акции, {$siteName}, характеристики, описание, отзывы, рейтинг, цена, обзоры";
+            $keywords =  "{$category->name}, {$product->name}, {$city->name}, Казахстан, купить, НИЗКАЯ ЦЕНА, Скидки, Акции, {$siteName}, характеристики, описание, отзывы, рейтинг, цена, обзоры";
 
         if($product->seo_description)
             $description = $product->seo_description;
@@ -69,7 +69,9 @@ class Seo
             if($category->seo_description)
                 $description = $category->seo_description;
             else
-                $description = "{$category->name} купить в {$city->name}, Казахстан ✅. Цены ⭐, характеристики ⚡, отзывы, обзоры, доставка ☝.";
+                $description = "✿ {$category->name} с доставкой в {$city->name} и другие города Казахстана теперь просто. "
+                                . "Высокое качество ✅, доступные цены ⭐ и большой выбор товаров ⚡ в интернет-магазине EcoKids. "
+                                . "Цены ⭐, характеристики ⚡, отзывы, обзоры, доставка ☝.";
 
             $title = "{$category->name} купить в {$city->name}, Казахстан";
         }
@@ -83,43 +85,49 @@ class Seo
 
     public static function pageSeo($page = ''){
 
-        $keywords = 'товары, НИЗКАЯ ЦЕНА, Скидки, Акции, ' . env('APP_NO_URL') . ' магазин электроники, купить, бытовая техника, электроника, покупка';
+        $keywords = 'товары, НИЗКАЯ ЦЕНА, Скидки, Акции, ' . env('APP_NO_URL') . ' интернет-магазин, купить, детские, товары, казахстан, ecokids';
+        $description = env('APP_NO_URL') . ' – интернет-магазин детских товаров в Казахстане.';
 
         $page_date = [
             'compare-products' => [
                 'title'       => 'Сравнение товаров',
                 'keywords'    => $keywords,
-                'description' => env('APP_NO_URL') . ' – интернет-магазин мобильной и цифровой техники в Казахстане.'
+                'description' => $description
             ],
             'contact' => [
                 'title'       => 'Контакты',
                 'keywords'    => $keywords,
-                'description' => 'Контактные данные интернет магазина ' . env('APP_NO_URL') . ' в городе Алматы'
+                'description' => $description
             ],
             'guaranty' => [
                 'title'       => 'Гарантия',
                 'keywords'    => $keywords,
-                'description' => 'На тестирование товара и обнаружение брака Вам предоставляется 14 дней.При обнаружение брака вы обращаетесь к нам, и мы вместе ищем причину проблемы.'
+                'description' => $description
             ],
             'delivery-payment' => [
                 'title'       => 'Доставка, оплата',
                 'keywords'    => $keywords,
-                'description' => 'Стандартная курьерская доставка по г.Алматы – доставка по адресу, указанному при оформлении заказа. Доставка осуществляется в удобные для клиента время и день (с учетом рабочего времени основного склада), в том числе и в день оформления заказа, при наличии свободных курьеров и товара на складе.'
+                'description' => $description
             ],
             'checkout' => [
                 'title'       => 'Оформление заказа',
                 'keywords'    => $keywords,
-                'description' => env('APP_NO_URL') . ' – интернет-магазин мобильной и цифровой техники в Казахстане.'
+                'description' => $description
+            ],
+            'cart' => [
+                'title'       => 'Корзина',
+                'keywords'    => $keywords,
+                'description' => $description
             ],
             'about' => [
                 'title'       => 'О нас',
                 'keywords'    => $keywords,
-                'description' => env('APP_NO_URL') . ' – интернет-магазин мобильной и цифровой техники в Казахстане.'
+                'description' => $description
             ],
             'wishlist' => [
                 'title'       => 'Мои закладки',
                 'keywords'    => $keywords,
-                'description' => env('APP_NO_URL') . ' – интернет-магазин мобильной и цифровой техники в Казахстане.'
+                'description' => $description
             ]
         ];
 

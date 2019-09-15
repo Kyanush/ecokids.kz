@@ -32,9 +32,6 @@
     <script src="/global/config-axios.js"></script>
     <!-- axios -->
 
-
-
-
     <!---- sweetalert2  ----->
     <script src="/site/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
@@ -53,6 +50,12 @@
     <script type="text/javascript" src="/site/js/axios.min.js"></script>
     <!-- Vue js -->
 
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <!-- https://jquerymodal.com/ --->
+    <!-- jQuery Modal -->
+
     <meta name="csrf-token"               content="{{ csrf_token() }}" />
 
     <link rel="preload" href="//fonts.googleapis.com/css?family=Fredoka+One%3Aregular%7CMontserrat%3A500%2C800%7COpen+Sans%3Aregular%2C700%26subset%3Dlatin%2Clatin-ext" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -64,8 +67,6 @@
     <link rel="stylesheet" href="/site/css/min.css"   type="text/css"   media="all"/>
     <link rel="stylesheet" href="/site/css/my.css"    type="text/css"   media="all"/>
 
-
-
     @yield('add_in_head')
     @include('schemas.business')
     @include('schemas.organization')
@@ -76,9 +77,22 @@
 </head>
 
 
-<body class="home page-template page-template-page-templates page-template-home-page page-template-page-templateshome-page-php page page-id-347 custom-background theme-kidz woocommerce-no-js sidebar-disable header-type-1 sticky-type-1 layout-boxed-white fixed-slider  woocommerce-on theme-demo preload
-    @yield('body_class')
-">
+<body class="
+home
+page-template
+page-template-page-templates
+page-template-home-page
+page-template-page-templateshome-page-php page
+custom-background
+theme-kidz
+woocommerce-no-js
+sidebar-disable
+header-type-1
+sticky-type-1
+layout-boxed-white
+fixed-slider
+woocommerce-on theme-demo preload
+@yield('body_class')">
 
 @include('site.includes.search')
 
@@ -110,21 +124,33 @@
                         @section('menu_top')
                             <li class="menu-item {{ Request::routeIs('guaranty') ? 'active' : '' }}">
                                 <a href="{{ route('guaranty') }}">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                     Гарантия
                                 </a>
                             </li>
                             <li class="menu-item {{ Request::routeIs('delivery_payment') ? 'active' : '' }}">
                                 <a href="{{ route('delivery_payment') }}">
+                                    <i class="fa fa-car"></i>
                                     Доставка/Оплата
                                 </a>
                             </li>
                             <li class="menu-item {{ Request::routeIs('contact') ? 'active' : '' }}">
                                 <a href="{{ route('contact') }}">
+                                    <i class="fa fa-phone"></i>
                                     Контакты
                                 </a>
                             </li>
+                            <li class="menu-item">
+                                <a href="#callback" rel="modal:open">
+                                    <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
+                                    Обратный звонок
+                                </a>
+                            </li>
+
+
                             <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-402">
                                 <a>
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
                                     Меню
                                 </a>
                                 <a href="#" class="js-more"><i class="more"></i></a>
@@ -132,8 +158,8 @@
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom {{ Request::routeIs('wishlist') ? 'active' : '' }}">
                                         <a href="{{ route('wishlist') }}">
                                             Мои закладки
-                                            <span v-if="product_features_wishlist_count > 0">
-                                                @{{  product_features_wishlist_count }}
+                                            <span class="kok" v-if="product_features_wishlist_count > 0">
+                                                (@{{  product_features_wishlist_count }})
                                             </span>
                                         </a>
                                         <a href="#" class="js-more"><i class="more"></i></a>
@@ -141,8 +167,8 @@
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom {{ Request::routeIs('compare_products') ? 'active' : '' }}">
                                         <a href="{{ route('compare_products') }}">
                                             Сравнение товаров
-                                            <span v-if="product_features_compare_count > 0">
-                                                @{{  product_features_compare_count }}
+                                            <span class="kok" v-if="product_features_compare_count > 0">
+                                                (@{{  product_features_compare_count }})
                                             </span>
                                         </a>
                                         <a href="#" class="js-more"><i class="more"></i></a>
@@ -153,6 +179,14 @@
                                         </a>
                                         <a href="#" class="js-more"><i class="more"></i></a>
                                     </li>
+                                    <li class="menu-item menu-item-type-custom menu-item-object-custom {{ Request::routeIs('news_list') ? 'news' : '' }}">
+                                        <a href="{{ route('news_list') }}">
+                                            Полезные статьи
+                                        </a>
+                                        <a href="#" class="js-more"><i class="more"></i></a>
+                                    </li>
+
+
                                 </ul>
                             </li>
                         @stop
@@ -193,7 +227,7 @@
                             </use>
                         </svg>
                     </a>
-                    <a class="cart-info" href="{{ route('checkout') }}">
+                    <a class="cart-info" href="{{ route('cart') }}">
                         <svg>
                             <use xlink:href="#svg-cart">
                                 <svg viewBox="0 0 24 22" id="svg-cart" fill="inherit" stroke="inherit"><path d="M9 7H1.501C.667 7 0 7.672 0 8.5v2c0 .826.672 1.5 1.501 1.5H2v7.506A2.5 2.5 0 0 0 4.493 22h15.014A2.495 2.495 0 0 0 22 19.506V12h.499c.834 0 1.501-.672 1.501-1.5v-2c0-.826-.672-1.5-1.501-1.5H15v1.002A2 2 0 0 1 13.002 10h-2.004A2 2 0 0 1 9 8.002V7zm-4 6.003A.999.999 0 0 1 6 12c.552 0 1 .438 1 1.003v4.994A.999.999 0 0 1 6 19c-.552 0-1-.438-1-1.003v-4.994zm4 0A.999.999 0 0 1 10 12c.552 0 1 .438 1 1.003v4.994A.999.999 0 0 1 10 19c-.552 0-1-.438-1-1.003v-4.994zm4 0A.999.999 0 0 1 14 12c.552 0 1 .438 1 1.003v4.994A.999.999 0 0 1 14 19c-.552 0-1-.438-1-1.003v-4.994zm4 0A.999.999 0 0 1 18 12c.552 0 1 .438 1 1.003v4.994A.999.999 0 0 1 18 19c-.552 0-1-.438-1-1.003v-4.994zM10 .998A.998.998 0 0 1 11.01 0h1.98c.558 0 1.01.446 1.01.998v7.004A.998.998 0 0 1 12.99 9h-1.98C10.451 9 10 8.554 10 8.002V.998z" fill="inherit" fill-rule="evenodd" stroke="none"></path></svg>
@@ -324,10 +358,52 @@
 
         @yield('content')
 
+    <div id="home-subscribe" class="home-subscribe   home-subscribe-header" style="background-color: #e2f0ff">
+        <div class="container">
+            <div class="home-subscribe__wrap">
+                <div class="home-subscribe__header">
+                    <svg class="home-subscribe__svg">
+                        <use xlink:href="#svg-subscribe">
+                            <svg viewBox="0 0 30 36" id="svg-subscribe" fill="inherit" stroke="inherit"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.4151 1.41507C16.4151 0.63055 15.7845 0 15 0C14.2155 0 13.5849 0.637882 13.5849 1.4224V10.0521C13.5849 10.8367 14.2155 11.4672 15 11.4672C15.7845 11.4672 16.4151 10.8367 16.4151 10.0521V1.41507ZM29.6493 32.3486C29.6493 34.3649 28.0069 36 25.998 36H4.00203C1.98574 36 0.350708 34.3576 0.350708 32.3486V17.3107C0.350708 15.2945 1.99307 13.6594 4.00203 13.6594H25.998C28.0142 13.6594 29.6493 15.3018 29.6493 17.3107V32.3486ZM3.98004 17.4721C3.65743 17.8533 3.70142 18.4179 4.08268 18.7405L11.0407 24.6574L4.04602 31.2415C3.68676 31.5788 3.67209 32.1507 4.00936 32.5099C4.18533 32.7006 4.41995 32.7959 4.66191 32.7959C4.88187 32.7959 5.10183 32.7152 5.27779 32.5539L12.4265 25.8305L14.4208 27.5242C14.5894 27.6635 14.7947 27.7368 15 27.7368C15.2053 27.7368 15.4106 27.6635 15.5792 27.5242L17.5735 25.8305L24.7222 32.5539C24.8982 32.7152 25.1181 32.7959 25.3381 32.7959C25.5727 32.7959 25.8147 32.7006 25.9906 32.5099C26.3352 32.1507 26.3132 31.5788 25.954 31.2415L18.9593 24.6574L25.9246 18.7478C26.2986 18.4252 26.3499 17.8606 26.0273 17.4794C25.7047 17.1055 25.1401 17.0541 24.7589 17.3767L15 25.6545L5.24847 17.3694C4.8672 17.0468 4.30264 17.0908 3.98004 17.4721ZM9.30306 4.5603C10.0876 4.5603 10.7181 5.19085 10.7181 5.97537V10.052C10.7181 10.8365 10.0876 11.467 9.30306 11.467C8.51854 11.467 7.88799 10.8365 7.88799 10.052V5.97537C7.88799 5.19818 8.51854 4.5603 9.30306 4.5603ZM19.2819 5.97537C19.2819 5.19085 19.9124 4.5603 20.6969 4.5603C21.4815 4.5603 22.112 5.19818 22.112 5.97537V10.052C22.112 10.8365 21.4815 11.467 20.6969 11.467C19.9124 11.467 19.2819 10.8365 19.2819 10.052V5.97537Z" fill="inherit" stroke="none"></path></svg>
+                        </use>
+                    </svg>
+                    Подпишитесь на рассылку <br/>новостей
+                </div>
+                <div class="home-subscribe__code">
+                    <!-- Mailchimp for WordPress v4.5.3 - https://wordpress.org/plugins/mailchimp-for-wp/ -->
+                    <form action="javascript:void(null);" onsubmit="subscribe(this); return false;" method="post" enctype="multipart/form-data" class="mc4wp-form mc4wp-form-839 mc4wp-form-submitted mc4wp-form-success">
+                        @csrf
+                        <div class="mc4wp-form-fields">
+                            <p>
+                                <label>E-mail: </label>
+                                <input name="email" type="email" class="newsletter_input"   placeholder="Введите адрес электронной почты">
+                            </p>
+                            <p>
+                                <input type="submit" value="Подписывайся">
+                            </p>
+                        </div>
+                        <label style="display: none !important;">
+                            Leave this field empty if you're human:
+                            <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off">
+                        </label>
+                        <!--
+                        <div class="mc4wp-response">
+                            <div class="mc4wp-alert mc4wp-success">
+                                <p>Thank you, your sign-up request was successful! Please check your email inbox to confirm.</p>
+                            </div>
+                        </div>
+                        -->
+                    </form><!-- / Mailchimp for WordPress Plugin -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer id="footer">
         <div class="wrap" style="background-color:#394c69;color:#c0c7d1">
             <div class="container">
                 <div class="row footer-sidebar">
+
                     <div class="col-md-3 col-sm-6 col-xs-6 first">
                         <div class="footer-logo">
                             <a href="/">
@@ -344,6 +420,50 @@
                         </div>
                     </div>
 
+                    <aside id="nav_menu-2" class="widget footer-widget widget_nav_menu col-md-3 col-sm-6 col-xs-6">
+                        <h2 class="widget-title">Меню</h2>
+                        <div class="menu-footer-menu-container">
+                            <ul id="menu-footer-menu" class="menu">
+                                <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                                    <a href="{{ route('guaranty') }}">
+                                        Гарантия
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                                    <a href="{{ route('delivery_payment') }}">
+                                        Доставка/Оплата
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                                    <a href="{{ route('contact') }}">
+                                        Контакты
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                                    <a href="{{ route('wishlist') }}">
+                                        Мои закладки
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                                    <a href="{{ route('compare_products') }}">
+                                        Сравнение товаров
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                                    <a href="{{ route('about') }}">
+                                        О нас
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                                    <a href="{{ route('news_list') }}">
+                                        Полезные статьи
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+
+
                     @php $products = \App\Services\ServiceYouWatchedProduct::listProducts(false, 4); @endphp
                     @include('site.includes.widget_footer', ['title' => 'Вы смотрели', 'products' => $products])
 
@@ -357,15 +477,6 @@
                     @endphp
                     @include('site.includes.widget_footer', ['title' => 'Новинки', 'products' => $products])
 
-                    @php
-                        $products = \App\Models\Product::productInfoWith()
-                                ->limit(4)
-                                //->where('stock', '>', 0)
-                                ->OrderBy('id', 'DESC')
-                                ->get();
-                    @endphp
-                    @include('site.includes.widget_footer', ['title' => 'Новые поступления', 'products' => $products])
-
                 </div>
                 <div class="row bottom ">
                     <div class="col-xs-12">
@@ -375,7 +486,7 @@
                     <div class="col-xs-6 col-xs-push-6">
                         <div class="soc">
                             <a href="{{ config('shop.social_network.instagram') }}" target="_blank" title="Вы в Instagram">
-                                <i class="soc-img soc-instagram fa fa-instagram"></i>
+                                <i class="soc-img soc-instagram fa fa-instagram fa-2x"></i>
                             </a>
                             <!--
                             <a href="#" target="_blank">
@@ -404,6 +515,50 @@
         </div>
     </footer>
 </div>
+
+
+<a href="#callback" rel="modal:open" title="Обратный звонок" class="callback-button">
+    <i class="fa fa-phone"></i>
+</a>
+
+<!-- Обратный звонок -->
+<div id="callback" class="modal">
+    <form action="javascript:void(null);" onsubmit="callback(this); return false;" method="post" enctype="multipart/form-data">
+        @csrf
+        <table>
+            <tr>
+                <td>
+                    <h1>
+                        Обратный звонок
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Введите номер телефона:</b></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text"
+                           name="phone"
+                           class="form-control phone-mask"
+                           @auth
+                           value="{{ Auth::user()->phone }}"
+                           @endauth
+                           placeholder="+7 (___) ___-__-__"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-primary">
+                        <img class="ajax-loader" src="/site/images/ajax-loader.gif"/>
+                        Отправить
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- Обратный звонок -->
 
 <!-- #wrap
 <div id="ip-quickview"></div>

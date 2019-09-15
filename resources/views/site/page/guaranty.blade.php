@@ -16,15 +16,34 @@
                'link'  => ''
            ]
        ];?>
-      @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 
-       <!-- SECTION -->
-       <div class="section">
-           <!-- container -->
-           <div class="container">
-               @include('includes.guaranty_text')
+
+
+
+       <div class="container post-container">
+           <div class="row">
+               <div class="col-md-12">
+                   <?php $breadcrumbs = [
+                       [
+                           'title' => 'Главная',
+                           'link'  => '/'
+                       ],
+                       [
+                           'title' => $seo['title'],
+                           'link'  => ''
+                       ]
+                   ];?>
+                   @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+                   <h1>{{ $seo['title'] }}</h1>
+                   <div class="row">
+                       <div class="col-md-12">
+                           text
+                       </div>
+                   </div>
+               </div>
            </div>
        </div>
+
 
 
 @endsection

@@ -7,10 +7,10 @@
             @foreach($product->attributes as $attribute)
                 @if($attribute->id == 4 and $attribute->pivot->value)
                     @foreach($attribute->values as $value)
-                        @if($value->value == $attribute->pivot->value)
+                        @if($value->value == $attribute->pivot->value && $value->value != 'Нет')
                             <span class="ip-shop-loop-{{ $value->code  }}-badge">
-                                                        {{ $attribute->pivot->value  }}
-                                                    </span>
+                                {{ $attribute->pivot->value  }}
+                            </span>
                             @break;
                         @endif
                     @endforeach

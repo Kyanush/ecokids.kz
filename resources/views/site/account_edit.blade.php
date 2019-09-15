@@ -18,48 +18,76 @@
                'link'  => ''
            ]
        ];?>
-      @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 
+       <div class="container post-container">
+           <div class="row">
+               <div class="col-md-12">
+                   <?php $breadcrumbs = [
+                       [
+                           'title' => 'Главная',
+                           'link'  => '/'
+                       ],
+                       [
+                           'title' => $title,
+                           'link'  => ''
+                       ]
+                   ];?>
+                   @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+                   <h1>{{ $title }}</h1>
+                   <div class="row">
+                       <div class="col-md-3">
+                           @include('site.includes.menu_left_my_account')
+                       </div>
+                       <div class="col-md-9">
+                           <form action="" method="post" enctype="multipart/form-data" id="simplepage_form">
+                               @csrf
 
-       <!-- SECTION -->
-       <div class="section">
-          <!-- container -->
-          <div class="container">
-             <!-- row -->
-             <div class="row">
-                <div class="col-md-3">
-                   @include('site.includes.menu_left_my_account')
-                </div>
-                <div class="col-md-4">
-                      <form action="" method="post" enctype="multipart/form-data" id="simplepage_form">
-                         @csrf
-                         <div class="form-group">
-                            <label>Имя *</label>
-                            <input class="input" type="text" name="account[name]" value="{{ $user->name }}" placeholder="Имя *">
-                         </div>
-                         <div class="form-group">
-                            <label>Фамилия</label>
-                            <input class="input" type="text" name="account[surname]" value="{{ $user->surname }}" placeholder="Фамилия">
-                         </div>
-                         <div class="form-group">
-                            <label>Email *</label>
-                            <input class="input" type="email" name="account[email]" value="{{ $user->email }}" placeholder="Электронная почта *">
-                         </div>
-                         <div class="form-group">
-                            <label>Телефон *</label>
-                            <input class="input phone-mask" type="tel" name="account[phone]" value="{{ $user->phone }}" placeholder="Мобильный телефон *">
-                         </div>
-                         <div class="form-group">
-                              <button class="btn btn-firm">Изменить</button>
-                         </div>
-                      </form>
-                </div>
-             </div>
-             <!-- /row -->
-          </div>
-          <!-- /container -->
+                               <table>
+                                   <tr>
+                                       <td>
+                                           <label>Имя *</label>
+                                       </td>
+                                       <td>
+                                           <input class="input" type="text" name="account[name]" value="{{ $user->name }}" placeholder="Имя *">
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td>
+                                           <label>Фамилия</label>
+                                       </td>
+                                       <td>
+                                           <input class="input" type="text" name="account[surname]" value="{{ $user->surname }}" placeholder="Фамилия">
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td>
+                                           <label>Email *</label>
+                                       </td>
+                                       <td>
+                                           <input class="input" type="email" name="account[email]" value="{{ $user->email }}" placeholder="Электронная почта *">
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td>
+                                           <label>Телефон *</label>
+                                       </td>
+                                       <td>
+                                           <input class="input phone-mask" type="tel" name="account[phone]" value="{{ $user->phone }}" placeholder="Мобильный телефон *">
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td colspan="2">
+                                           <button class="btn">Изменить</button>
+                                       </td>
+                                   </tr>
+                               </table>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
        </div>
-       <!-- /SECTION -->
+
 
 
 

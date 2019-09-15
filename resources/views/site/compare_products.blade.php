@@ -6,28 +6,30 @@
 
 @section('content')
 
-       <?php $breadcrumbs = [
-           [
-               'title' => 'Главная',
-               'link'  => '/'
-           ],
-           [
-               'title' => $seo['title'],
-               'link'  => ''
-           ]
-       ];?>
-      @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 
-       <!-- SECTION -->
-       <div class="section">
-           <!-- container -->
-           <div class="container">
+
+       <div class="container post-container">
+           <div class="row">
+               <div class="col-md-12">
+                   <?php $breadcrumbs = [
+                       [
+                           'title' => 'Главная',
+                           'link'  => '/'
+                       ],
+                       [
+                           'title' => $seo['title'],
+                           'link'  => ''
+                       ]
+                   ];?>
+                   @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+                   <h1>{{ $seo['title'] }}</h1>
+
 
                @if(count($productFeaturesCompareList) == 0)
                    <div class="content">Вы не выбрали ни одного товара для сравнения.</div>
                @else
                    <div class="table-responsive">
-                       <table class="table table-striped compare-info">
+                       <table class="table">
                            <tbody>
                            <tr>
                                <td>Наименование</td>
@@ -140,7 +142,7 @@
                                @foreach($productFeaturesCompareList as $item)
                                    <td>
                                        <a href="{{ route('compare_product_delete', ['product_id' => $item->product_id]) }}" class="button">
-                                           <i class="fa fa-remove firm-red"></i> Удалить
+                                           <i class="fa fa-remove red"></i> Удалить
                                        </a>
                                    </td>
                                @endforeach
@@ -151,9 +153,10 @@
                    </div>
                @endif
 
+
+               </div>
            </div>
        </div>
-
 
 
 

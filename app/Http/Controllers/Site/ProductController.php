@@ -16,14 +16,7 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
 
-    public function cardSuccessPopup($product_id)
-    {
-        $product = Product::find($product_id);
 
-        return view('includes.card_success_popup', [
-            'product'  => $product
-        ]);
-    }
 
     public function productDetailDefault($product_url){
         return $this->productDetailMain('', $product_url, '');
@@ -41,11 +34,6 @@ class ProductController extends Controller
                             ->with(['images' => function($query){
                                     $query->OrderBy('order', 'ASC');
                                 },
-                                /*
-                                'questionsAnswers' => function($query){
-                                    $query->isActive();
-                                },
-                                */
                                 'reviews' => function($query){
                                     $query->with('isLike');
                                     $query->withCount(['likes', 'disLikes']);
@@ -58,11 +46,8 @@ class ProductController extends Controller
 
         $group_products = $product->groupProducts()->productInfoWith()->where('id', '<>', $product->id)->get();
 
-        $products_interested = $product->productAccessories()->productInfoWith()->get();
-
         //Вы смотрели
         ServiceYouWatchedProduct::youWatchedProduct($product->id);
-        $youWatchedProducts = ServiceYouWatchedProduct::listProducts($product->id);
 
 
 
@@ -95,8 +80,6 @@ class ProductController extends Controller
         return view('site.product_detail', [
             'product'  => $product,
             'group_products' => $group_products,
-            'products_interested' => $products_interested,
-            'youWatchedProducts' => $youWatchedProducts,
             'category' => $category,
             'seo' => $seo,
             'breadcrumbs' => $breadcrumbs,

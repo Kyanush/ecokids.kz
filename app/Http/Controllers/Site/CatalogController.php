@@ -59,30 +59,10 @@ class CatalogController extends Controller
 
 
         $products = Product::productInfoWith()
-            ->where(function ($query){
-                //скидки
-                /*
-                if(strpos(url()->current(), '/specials') !== false)
-                {
-                    $query->WhereHas('specificPrice', function ($query) {
-                        $query->dateActive();
-                    });
-                }*/
-            })
             ->filters($filters)
             ->filtersAttributes($filters)
             ->OrderBy($column, $order)
             ->paginate(12)->onEachSide(1);
-
-        $productsHitViewed = Product::productInfoWith()
-            ->filters($category_code ? ['category' => $category_code] : [])
-            ->OrderBy('viewed', 'DESC')
-            ->limit(10)
-            ->get();
-
-
-        //Вы смотрели
-        $youWatchedProducts = ServiceYouWatchedProduct::listProducts(false, 5);
 
         //seo
         $seo = Seo::catalog($category);
@@ -100,8 +80,6 @@ class CatalogController extends Controller
 
         return view('site.catalog', [
             'products' => $products,
-            'youWatchedProducts' => $youWatchedProducts,
-            'productsHitViewed' => $productsHitViewed,
             'filters' => $filters,
             'category' => $category,
             'priceMinMax' => $priceMinMax,

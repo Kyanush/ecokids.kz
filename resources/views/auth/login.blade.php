@@ -23,44 +23,83 @@
             'link'  => ''
         ]
     ];?>
-    @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 
-    <div class="section">
-        <!-- container -->
-        <div class="container">
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4>Новый клиент</h4>
-                        <p>Создав учетную запись Вы сможетете быстрее оформлять заказы, отслеживать их статус и просматривать историю покупок.</p>
-                        <a href="/register" class="button"><span>Регистрация</span></a>
-                    </div>
-                    <div class="col-md-4">
-                        <h4>Войти в Личный Кабинет</h4>
 
-                        <form action="{{ route('login') }}" id="form" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group">
-                                <label>E-Mail:</label>
-                                <input required autofocus type="text" class="input {{ $errors->has('email') ? ' is-invalid' : '' }}"  name="email" value="{{ old('email') }}"/>
+    <div class="container post-container">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                @include('site.includes.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+
+                <section role="main" class="post-open">
+                    <article id="post-8" class="post-8 page type-page status-publish hentry">
+                        <div class="shop-content">
+                            <div class="woocommerce">
+                                <div class="woocommerce-notices-wrapper"></div>
+                                <div id="customer_login">
+                                    <h1>
+                                        <a class="tab-header active">Авторизация</a>
+                                        /
+                                        <a href="{{ route('register') }}" class="tab-header">Регистрация</a>
+                                    </h1>
+                                    <ul class="wrap">
+                                        <li class="login-wrap active">
+                                            <form class="woocommerce-form woocommerce-form-login login" action="{{ route('login') }}" id="form" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                    <label for="username">
+                                                        E-Mail:
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <input class="woocommerce-Input woocommerce-Input--text input-text {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                                           required
+                                                           autofocus
+                                                           type="text"
+                                                           name="email"
+                                                           value="{{ old('email') }}"/>
+                                                </p>
+                                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                    <label for="password">
+                                                        Пароль
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <input class="woocommerce-Input woocommerce-Input--text input-text {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                                           id="password"
+                                                           type="password"
+                                                           name="password"
+                                                           required>
+                                                </p>
+                                                <p class="form-row">
+                                                    <!--
+                                                    <label class="woocommerce-form__label woocommerce-form__label-for-checkbox inline">
+                                                        <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever">
+                                                        <i></i> Remember me
+                                                    </label>
+                                                    --->
+                                                    <button type="submit" class="woocommerce-Button button" name="login" value="Login">
+                                                        Войти
+                                                    </button>
+                                                </p>
+                                                <div class="clear"></div>
+                                                <p class="woocommerce-LostPassword lost_password">
+                                                    <a href="{{ route('password.request') }}">Забыли пароль?</a>
+                                                </p>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="clear"></div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Пароль:</label><br>
-                                <input id="password" type="password" class="input {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-                            </div>
-                            <div class="form-group">
-                                <a href="{{ route('password.request') }}">Забыли пароль?</a>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-firm">Войти</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
+                        </div>
+                    </article>
+                </section>
+            </div>
         </div>
+
     </div>
+
 
 
 @endsection
