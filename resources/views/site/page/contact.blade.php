@@ -64,6 +64,11 @@
                                 </svg>
                                 <div class="contact-header">Телефон</div>
                                 <a href="tel:{{ $number_phones[0]['number'] }}">{{ $number_phones[0]['format'] }}</a>
+                                <br/>
+                                <a target="_blank" href="https://api.whatsapp.com/send?phone={{ str_replace('+', '', $number_phones[0]['number']) }}">
+                                    <i class="fa fa-whatsapp"></i>
+                                    Напиши на WhatsApp
+                                </a>
                                 <div class="contact-header">Мы в соцсетях</div>
                                 <a href="{{ config('shop.social_network.instagram') }}" title="Вы в Instagram" target="_blank">
                                     <i class="fa fa-instagram fa-2x"></i>

@@ -114,7 +114,7 @@ woocommerce-on theme-demo preload
                             <span><a href="{{ route('register') }}">Регистрация</a></span>
                         @endguest
                         @auth
-                            <span><a href="{{ route('my_account') }}">Вы вошли как {{ Auth::user()->name }}</a></span>
+                            <span><a href="{{ route('my_account') }}">{{ Auth::user()->name }}</a></span>
                             <span><a href="{{ route('logout') }}">Выйти</a></span>
                         @endauth
                     </a>
@@ -411,12 +411,34 @@ woocommerce-on theme-demo preload
                             </a>
                         </div>
                         <div class="contacts">
-                            {{ $address[0]['addressLocality'] }}
-                            <br>
-                            {{ $address[0]['streetAddress'] }}
-                            <a href="mailto:{{ config('shop.site_email') }}">
-                                {{ config('shop.site_email') }}
-                            </a>
+                            <p>
+                                <i class="fa fa-address-book"></i>
+                                Адрес:
+                                {{ $address[0]['addressLocality'] }}
+                                <br>
+                                {{ $address[0]['streetAddress'] }}
+                            </p>
+                            <br/>
+                            <p>
+                                <i class="fa fa-mail-forward"></i>
+                                E-mail:
+                                <a href="mailto:{{ config('shop.site_email') }}">
+                                    {{ config('shop.site_email') }}
+                                </a>
+                            </p>
+                            <br/>
+                            <p>
+                                <i class="fa fa-phone"></i>
+                                Телефон:
+                                <a href="tel:{{ $number_phones[0]['number'] }}">{{ $number_phones[0]['format'] }}</a>
+                            </p>
+                            <br/>
+                            <p>
+                                <a target="_blank" href="https://api.whatsapp.com/send?phone={{ str_replace('+', '', $number_phones[0]['number']) }}">
+                                    <i class="fa fa-whatsapp"></i>
+                                    Напиши на WhatsApp
+                                </a>
+                            </p>
                         </div>
                     </div>
 

@@ -95,7 +95,13 @@ sub {
 }
 
 img {
-    border: 0
+    border: 0;
+    max-width: 100%;
+}
+@media (max-width:768px) {
+    img {
+        height: auto;
+    }
 }
 
 svg:not(:root) {
@@ -3058,8 +3064,7 @@ select.styled {
 #ajax-search input[type=text] {
     margin-left: 15px;
     border: none;
-    width: 80%;
-    width: calc(100% - 110px);
+    width: 100%;
     text-overflow: ellipsis;
     padding-left: 15px;
     padding-right: 15px;
@@ -9825,7 +9830,7 @@ div.woocommerce-error a.button,
     }
     #home-banners .banner,
     .fixed-slider #home-banners .banner {
-        width: 50%;
+        width: 100%;
     }
     .footer-sidebar>*:nth-child(4n+3) {
         clear: both;
@@ -9968,6 +9973,7 @@ div.woocommerce-error a.button,
         overflow: hidden;
         padding-left: 30px;
         padding-right: 30px;
+        padding-bottom: 30px;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
         -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
@@ -10419,11 +10425,13 @@ div.woocommerce-error a.button,
     #home-banners .banner:nth-of-type(2),
     #home-banners .banner:nth-of-type(3),
     #home-banners .banner:nth-of-type(4) {
+        /*
         display: inline-block;
         opacity: 0;
         visibility: hidden;
         -webkit-transition: opacity 0.8s, visibility 0.8s;
         transition: opacity 0.8s, visibility 0.8s;
+        */
     }
     #home-banners .banner:nth-of-type(3),
     #home-banners .banner:nth-of-type(4) {
@@ -11030,7 +11038,7 @@ div.woocommerce-error a.button,
     ul.products,
     .products,
     .entry-content ul.products {
-        display: block;
+        display: table;
         max-width: 415px;
         margin-left: auto;
         margin-right: auto;
@@ -11415,6 +11423,7 @@ div.woocommerce-error a.button,
     .sidebar-disable ul.products .product-category,
     ul.products .product-category {
         width: 50%;
+        height: 130px;
     }
     ul.products .product-category .ip-shop-loop-wrap>a {
         -ms-flex-wrap: wrap;

@@ -12,17 +12,13 @@
             'instagram'       => 'https://www.instagram.com/kidkidskz',
             'instagram_token' => '4233405290.1677ed0.e5692138251945c9a0f76180a4885e49'
         ],
-
         'number_phones' => [
             [
-                //'format' => '+7 (708) 961-92-25',
-                //'number' => '+77089619225',
-                'format' => '+7 (775) 108-03-90',
-                'number' => '+77751080390',
+                'format' => '+7 (747) 223-31-91',
+                'number' => '+77472233191',
                 'contactType' => 'Менеджер'
             ]
         ],
-
         'address' => [
             [
                 "streetAddress" => "",
@@ -36,7 +32,6 @@
                 ]
             ]
         ],
-
         'site_email' => 'info@ecokids.kz',
         'logo' => env('APP_URL')    . '/site/images/logo.png',
         'favicon' => env('APP_URL') . '/favicon.ico'
