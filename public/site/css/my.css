@@ -1,6 +1,6 @@
 body.custom-background {
     background-color: #6ecded;
-    background-image: url("https://parkofideas.com/kidz/demo2/wp-content/uploads/2018/10/clothes-2049536750.jpg");
+    background-image: url("/site/images/clothes-2049536750.jpg");
     background-position: left top;
     background-size: auto;
     background-repeat: no-repeat;
@@ -12,8 +12,6 @@ body.custom-background {
 .kok{
     color: #31ACD8;
 }
-
-
 table>tbody>tr>td,
 table>tbody>tr>th,
 table>tfoot>tr>td,
@@ -93,5 +91,5 @@ table>thead>tr>th {
     border: 3px solid #ffffff;
 }
 .blocker{
-    z-index: 1000000000000000000000000000;
+    z-index: 1002;
 }

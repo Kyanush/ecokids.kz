@@ -93,7 +93,8 @@
                     <div class="clearfix"></div>
                 </section>
             </div>
-            <div class="col-md-3" style="display: none">
+            <!--
+            <div class="col-md-3">
                 <aside id="sidebar">
                     <aside id="ideapark_latest_posts_widget-3" class="widget custom-latest-posts-widget"><h2 class="widget-title">Latest Posts</h2>			<ul>
                             <li>
@@ -159,6 +160,7 @@
                         </ul>
                     </aside><aside id="recent-comments-4" class="widget widget_recent_comments"><h2 class="widget-title">Recent Comments</h2><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">admin</span> on <a href="https://parkofideas.com/kidz/demo1/product/stokke-scoot-stroller-in-slate-blue/#comment-3">Stokke Scoot Stroller in Slate Blue</a></li><li class="recentcomments"><span class="comment-author-link"><a href="https://wordpress.org/" rel="external nofollow" class="url">A WordPress Commenter</a></span> on <a href="https://parkofideas.com/kidz/demo1/the-quick-brown-fox-jumps-over-a-lazy-dog/#comment-2">The quick, brown fox jumps over a lazy dog</a></li></ul></aside></aside>
             </div>
+            -->
         </div>
     </div>
 
