@@ -9,7 +9,7 @@
         'news_path_file' => 'uploads/news/',
 
         'social_network' => [
-            'instagram'       => 'https://www.instagram.com/kidkidskz',
+            'instagram'       => 'https://www.instagram.com/ecokidskaz',
             'instagram_token' => '4272330333.1677ed0.fab43606c8994e73817ebb22029734de'
         ],
         'number_phones' => [
