@@ -128,6 +128,12 @@ woocommerce-on theme-demo preload
                                     Гарантия
                                 </a>
                             </li>
+                            <li class="menu-item {{ Request::routeIs('usloviya_vozvrata') ? 'active' : '' }}">
+                                <a href="{{ route('usloviya_vozvrata') }}">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                    Условия возврата
+                                </a>
+                            </li>
                             <li class="menu-item {{ Request::routeIs('delivery_payment') ? 'active' : '' }}">
                                 <a href="{{ route('delivery_payment') }}">
                                     <i class="fa fa-car"></i>

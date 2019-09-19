@@ -28,4 +28,11 @@ class PageController extends Controller
         return view('site.page.about', ['seo' => $seo]);
     }
 
+    public function usloviya_vozvrata(){
+        $seo = Seo::pageSeo('usloviya_vozvrata');
+        return view('site.page.usloviya_vozvrata', ['seo' => $seo]);
+    }
+
+
+
 }

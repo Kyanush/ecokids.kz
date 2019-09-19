@@ -128,7 +128,13 @@ class Seo
                 'title'       => 'Мои закладки',
                 'keywords'    => $keywords,
                 'description' => $description
-            ]
+            ],
+            'usloviya_vozvrata' => [
+                'title'       => 'Условия возврата',
+                'keywords'    => $keywords,
+                'description' => $description
+            ],
+
         ];
 
         return $page ? $page_date[$page] : $page_date;

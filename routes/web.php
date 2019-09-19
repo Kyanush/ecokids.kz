@@ -97,6 +97,8 @@ Route::group(['namespace'  => 'Site'], function () {
     //страницы
     Route::get('delivery-payment',         'PageController@deliveryPayment')->name('delivery_payment');
     Route::get('guaranty',                 'PageController@guaranty')->name('guaranty');
+    Route::get('usloviya-vozvrata',        'PageController@usloviya_vozvrata')->name('usloviya_vozvrata');
+
     Route::get('contact',                  'PageController@contact')->name('contact');
     Route::get('about',                    'PageController@about')->name('about');
     //выбор города
