@@ -4,11 +4,6 @@
             <div style="margin-left:30px;float:left;"></div>
 
             <div style="float:right;margin-right:30px;">
-                <a href="{{ env('APP_URL') }}/catalog/smartfony" style="display:inline-block;margin:0 0 0 9px;color:#fe8c2c;font-size:12px;" class="daria-goto-anchor" target="_blank" rel="noopener noreferrer">
-                    <span style="border-right:1px solid #484848;padding-right:9px;">
-                       Каталог товаров
-                    </span>
-                </a>
                 <a href="{{ route('my_account') }}" style="display:inline-block;margin:0 9px;color:#fff;font-size:12px;" class="daria-goto-anchor" target="_blank" rel="noopener noreferrer">
                     Личный кабинет
                 </a>
@@ -35,36 +30,6 @@
 
         </div>
 
-        <div style="padding:30px;padding-top:22px;">
-            <div style="color:#333333;font-weight:bold;margin-bottom:13px;">Дополнительные ссылки:</div>
-
-            <div style="overflow:hidden;">
-                <div style="width:200px;float:left;">
-                    <div style="margin-top:5px;">
-                        <a href="{{ env('APP_URL') }}/catalog/smartfony" style="color:#fe7a0b;"  class="daria-goto-anchor" target="_blank" rel="noopener noreferrer">
-                            Каталог товаров
-                        </a>
-                    </div>
-                    <div style="margin-top:5px;">
-                        <a href="{{ route('contact') }}" style="color:#fe7a0b;"  class="daria-goto-anchor" target="_blank" rel="noopener noreferrer">
-                            Контакты
-                        </a>
-                    </div>
-                </div>
-                <div style="width:200px;float:left;">
-                    <div style="margin-top:5px;">
-                        <a href="{{ route('guaranty') }}" style="color:#fe7a0b;"  class="daria-goto-anchor" target="_blank" rel="noopener noreferrer">
-                            Гарантия
-                        </a>
-                    </div>
-                    <div style="margin-top:5px;">
-                        <a href="{{ route('delivery_payment') }}/" style="color:#fe7a0b;"  class="daria-goto-anchor" target="_blank" rel="noopener noreferrer">
-                            Доставка, оплата
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div style="background:#f2f2f2;height:44px;line-height:44px;padding-left:30px;font-weight:bold;">Социальные сети:</div>
 
@@ -85,9 +50,9 @@
                 <div style="font-weight:bold;color:#fff;">О компании</div>
 
                 <div style="color:#636363;margin-top:8px;font-size:12px;">
-                    Вы предпочитаете покупать исключительно качественную электронную технику, имеющую все необходимые сертификаты? Значит,
-                    магазин «{{env('APP_NO_URL')}}» – то, что вам нужно! Мы рады приветствовать на этом сайте каждого покупателя и готовы
-                    предложить вам только подлинные устройства популярных брендов.
+                    Интернет-магазин детских товаров в Казахстане {{env('APP_NO_URL')}} — интернет магазин
+                    товаров для детей и новорожденных! Лучшие цены на детские товары возможны
+                    благодаря прямым поставкам от производителей.
                 </div>
 
                 <div style="margin-top:20px;overflow:hidden;">
@@ -116,8 +81,8 @@
 
                 <div style="color:#afafaf;margin-top:8px;font-size:12px;margin-top:15px;">
                     <div style="color:#fff;text-decoration:underline;font-size:12px;">E-mail:
-                        <a href="mailto:{{ env('MAIL_ADMIN') }}" style="color:#fff;font-size:12px;" class="ns-action">
-                            {{ env('MAIL_ADMIN') }}
+                        <a href="mailto:{{ config('shop.site_email') }}" style="color:#fff;font-size:12px;" class="ns-action">
+                            {{ config('shop.site_email') }}
                         </a>
                     </div>
 
