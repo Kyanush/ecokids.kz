@@ -10,7 +10,7 @@
 
         'social_network' => [
             'instagram'       => 'https://www.instagram.com/kidkidskz',
-            'instagram_token' => '4233405290.1677ed0.e5692138251945c9a0f76180a4885e49'
+            'instagram_token' => '4272330333.1677ed0.fab43606c8994e73817ebb22029734de'
         ],
         'number_phones' => [
             [

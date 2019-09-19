@@ -128,12 +128,6 @@ woocommerce-on theme-demo preload
                                     Гарантия
                                 </a>
                             </li>
-                            <li class="menu-item {{ Request::routeIs('usloviya_vozvrata') ? 'active' : '' }}">
-                                <a href="{{ route('usloviya_vozvrata') }}">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    Условия возврата
-                                </a>
-                            </li>
                             <li class="menu-item {{ Request::routeIs('delivery_payment') ? 'active' : '' }}">
                                 <a href="{{ route('delivery_payment') }}">
                                     <i class="fa fa-car"></i>
@@ -191,8 +185,11 @@ woocommerce-on theme-demo preload
                                         </a>
                                         <a href="#" class="js-more"><i class="more"></i></a>
                                     </li>
-
-
+                                    <li class="menu-item menu-item-type-custom menu-item-object-custom {{ Request::routeIs('usloviya_vozvrata') ? 'news' : '' }}">
+                                        <a href="{{ route('usloviya_vozvrata') }}">
+                                            Условия возврата
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @stop
@@ -485,6 +482,11 @@ woocommerce-on theme-demo preload
                                 <li class="menu-item menu-item-type-post_type menu-item-object-product">
                                     <a href="{{ route('news_list') }}">
                                         Полезные статьи
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                                    <a href="{{ route('usloviya_vozvrata') }}">
+                                        Условия возврата
                                     </a>
                                 </li>
                             </ul>
