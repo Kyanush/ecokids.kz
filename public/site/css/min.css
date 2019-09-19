@@ -5957,6 +5957,10 @@ select.styled {
     overflow-x: hidden;
 }
 
+.woocommerce-product-details__short-description a{
+    color: #31acd8;
+}
+
 .ip-p-c.qv .product_title {
     margin-top: 0;
 }
